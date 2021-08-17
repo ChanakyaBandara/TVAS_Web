@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/charts.css">
+  <title>My Chart.js Chart</title>
+</head>
+
+<body>
+  <input type="file" id="input">
+  <!-- <div class="container">
+    <canvas id="myChart" width="1400"></canvas>
+  </div> -->
+  <div class="chartAreaWrapper">
+    <canvas id="myChart" width="1500"></canvas>
+  </div>
+
+  <script>
+    var dataXL;
+    var dataHeadings;
+    var input = document.getElementById('input');
+
+    input.addEventListener('change', function () {
+      readXlsxFile(input.files[0]).then(function (data) {
+        console.log(data);
+        dataHeadings = data[0];
+        dataHeadings[0] = "Time";
+        console.log(dataHeadings);
+        dataXL = data;
+        dataXL.splice(0, 3);
+
+        let subsections1 = dataXL.map(function (subarray) {
+          let val = subarray.slice(0, 1)
+          return val[0]
+        })
+
+        let subsections2 = dataXL.map(function (subarray) {
+          let val = subarray.slice(1, 2)
+          return val[0]
+        })
+
+        let subsections3 = dataXL.map(function (subarray) {
+          let val = subarray.slice(2, 3)
+          return val[0]
+        })
+
+        let subsections4 = dataXL.map(function (subarray) {
+          let val = subarray.slice(3, 4)
+          return val[0]
+        })
+
+        let subsections5 = dataXL.map(function (subarray) {
+          let val = subarray.slice(4, 5)
+          return val[0]
+        })
+
+        let subsections6 = dataXL.map(function (subarray) {
+          let val = subarray.slice(5, 6)
+          return val[0]
+        })
+
+        let subsections7 = dataXL.map(function (subarray) {
+          let val = subarray.slice(6, 7)
+          return val[0]
+        })
+
+        console.log(subsections1[subsections1.length - 1])
+        console.log(subsections1[0])
+        drawChart(subsections1, subsections2, subsections3, subsections4, subsections5, subsections6, subsections7);
+      });
+    });
+
+    function drawChart(subsections1, subsections2, subsections3, subsections4, subsections5, subsections6, subsections7) {
+      let myChart = document.getElementById('myChart').getContext('2d');
+      // Global Options
+      Chart.defaults.global.defaultFontFamily = 'Lato';
+      Chart.defaults.global.defaultFontSize = 18;
+      Chart.defaults.global.defaultFontColor = '#777';
+
+      let massPopChart = new Chart(myChart, {
+        type: 'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: {
+          labels: subsections1,
+          datasets: [{
+            label: dataHeadings[1],
+            data: subsections2,
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderWidth: 1,
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 0.6)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
+          }, {
+            label: dataHeadings[2],
+            data: subsections3,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderWidth: 1,
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 0.6)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
+          }, {
+            label: dataHeadings[3],
+            data: subsections4,
+            backgroundColor: 'rgba(255, 205, 86)',
+            borderWidth: 1,
+            fill: false,
+            borderColor: 'rgba(255, 205, 86)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
+          }, {
+            label: dataHeadings[4],
+            data: subsections5,
+            backgroundColor: 'rgba(201, 203, 207)',
+            borderWidth: 1,
+            fill: false,
+            borderColor: 'rgba(201, 203, 207)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
+          }, {
+            label: dataHeadings[5],
+            data: subsections6,
+            backgroundColor: 'rgba(54, 162, 235)',
+            borderWidth: 1,
+            fill: false,
+            borderColor: 'rgba(54, 162, 235)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
+          }, {
+            label: dataHeadings[6],
+            data: subsections7,
+            backgroundColor: 'rgba(236, 3, 252, 0.6)',
+            borderWidth: 1,
+            fill: false,
+            borderColor: 'rgba(236, 3, 252, 0.6)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
+          }]
+        },
+        options: {
+          plugins: {
+            autocolors: false,
+            annotation: {
+              annotations: {
+                line1: {
+                  type: 'line',
+                  yMin: 0.5,
+                  yMax: 0.5,
+                  borderColor: 'rgb(255, 99, 132)',
+                  borderWidth: 2,
+                }
+              }
+            }
+          },
+          title: {
+            display: true,
+            text: 'TR Vibrations',
+            fontSize: 25
+          },
+          legend: {
+            display: true,
+            position: 'right',
+            labels: {
+              fontColor: '#000'
+            }
+          },
+          layout: {
+            padding: {
+              left: 50,
+              right: 0,
+              bottom: 0,
+              top: 0
+            }
+          },
+          tooltips: {
+            enabled: true
+          }
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
