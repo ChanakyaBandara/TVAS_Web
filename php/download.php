@@ -1,6 +1,5 @@
 <?php
 // define('SITE_ROOT',dirname(__FILE__));
-echo hi
 if(isset($_GET['path'],$_GET['name'])){
 
     $path_dir = $_GET['path'];

@@ -42,6 +42,20 @@ require 'Upload_file.php';
 		$trs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($trs);
 	}
+
+	if(isset($_POST['loadAnalizeSearch'])) {
+		$db = new DbConnect;
+		$conn = $db->connect();
+		$stmt = $conn->prepare("SELECT * FROM `datafiles` WHERE `trID`=" . $_POST['loadAnalizeSearch'] . ";");
+		$stmt->execute();
+		$trs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($trs);
+	}
+
+	if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
+		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py 'TR_60MW_set1.xlsx' 'TR_60MW_set2.xlsx'");
+		echo $output;
+	}
 	
     if(isset($_POST['addDataFile'])){
 		

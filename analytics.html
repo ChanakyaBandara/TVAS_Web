@@ -103,63 +103,82 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Line chart</h4>
-                  <br>
-                  <canvas id="lineChart" style="height:250px"></canvas>
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Analize Data</h4>
+                <p class="card-description"> Fill the fields below </p>
+                <div class="row">
+                  <div class="col-md-4 d-flex align-items-center">
+                    <div class="d-flex flex-row align-items-center">
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-center">
+                    <div class="d-flex flex-row align-items-center">
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="col-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Product Categories</h4>
-                  <br>
-                  </p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th> User ID </th>
-                        <th> Username </th>
-                        <th> Package </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td> 15625 </td>
-                        <td> Herman Beck </td>
-                        <td class="text-success"> Pro</td>
-                      </tr>
-                      <tr>
-                        <td> 15625 </td>
-                        <td> Herman Beck </td>
-                        <td class="text-primary"> Beginner</td>
-                      </tr>
-                      <tr>
-                        <td> 15625 </td>
-                        <td> Herman Beck </td>
-                        <td class="text-default"> Intermediate</td>
-                      </tr>
-                      <tr>
-                        <td> 15625 </td>
-                        <td> Herman Beck </td>
-                        <td class="text-warning"> Elite</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <form class="forms-sample">
+                  <input type="hidden" id="trID" name="trID">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Transformer ID</label>
+                    <div class="input-group col-sm-9">
+                      <input type="text" class="form-control" placeholder="Transformer ID"
+                        aria-label="Recipient's username" aria-describedby="basic-addon2" id="trSearchID"
+                        name="trSearchID">
+                      <div class="input-group-append">
+                        <button class="btn btn-sm btn-gradient-primary" type="button" id="trSearchBtn">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="trLocation" placeholder="Location" disabled>
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="trPhase" placeholder="Phase" disabled>
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="trCapacity" placeholder="Capacity" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-4">
+                      <select class="form-control" id="sheet1" name="sheet1">
+                      </select>
+                    </div>
+                    <div class="col-sm-4">
+                      <label class="col-form-label" style="text-align: center;">VS</label>
+                    </div>
+                    <div class="col-sm-4">
+                      <select class="form-control" id="sheet2" name="sheet2">
+                      </select>
+                    </div>
+                  </div>
+                  <button type="button" id="analizeBtn" class="btn btn-gradient-primary mr-2">Analize</button>
+                  <button type="reset" class="btn btn-warning">Clear</button>
+                </form>
+                <br>
+                <h4 class="card-title">Results</h4>
+                <br>
+                </p>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th> LV / HV </th>
+                      <th> Phase</th>
+                      <th> LF </th>
+                      <th> HF </th>
+                      <th> 50Hz </th>
+                      <th> Result </th>
+                    </tr>
+                  </thead>
+                  <tbody id="trTblBody">
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-
-
-
-
-
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
@@ -190,6 +209,88 @@
   <!-- endinject -->
   <!-- Custom js for this page -->
   <!-- End custom js for this page -->
+  <script>
+    $(document).ready(function () {
+      var trSearchID = document.getElementById('trSearchID');
+      var trSearchBtn = document.getElementById('trSearchBtn');
+      var trAnalizeBtn = document.getElementById('analizeBtn');
+      var trID = document.getElementById('trID');
+      var trLocation = document.getElementById('trLocation');
+      var trPhase = document.getElementById('trPhase');
+      var trCapacity = document.getElementById('trCapacity');
+      var sheet1 = document.getElementById('sheet1');
+      var sheet2 = document.getElementById('sheet2');
+
+      trSearchBtn.addEventListener('click', function () {
+        $.ajax({
+          url: 'php/data.php',
+          method: 'post',
+          data: 'loadTrTblSearch=' + trSearchID.value
+        }).done(function (trData) {
+          //console.log(modules);
+          trData = JSON.parse(trData);
+          //console.log(log);
+          //`trID`, `trName`, `location`, `capascity`, `phase`, `manufacture`, `year`
+          let TRIDD = -1;
+          trData.forEach(function (trData) {
+            trLocation.value = trData.location;
+            trPhase.value = trData.phase + " ph";
+            trCapacity.value = trData.capascity + " MVA";
+            trID.value = trData.trID
+            TRIDD = trData.trID;
+          });
+
+          $.ajax({
+            url: 'php/data.php',
+            method: 'post',
+            data: 'loadAnalizeSearch=' + TRIDD
+          }).done(function (fileData) {
+            //console.log(modules);
+            fileData = JSON.parse(fileData);
+            //console.log(fileData);
+            //`trID`, `trName`, `location`, `capascity`, `phase`, `manufacture`, `year`
+            fileData.forEach(function (fileData) {
+              var date = fileData.date;
+              //console.log(fileData.load_condition)
+              var loadCondition = ""
+              switch (fileData.load_condition) {
+                case '1':
+                  loadCondition = '100%'
+                  break;
+                case '2':
+                  loadCondition = '50%'
+                  break;
+                default:
+                  loadCondition = '0%'
+              }
+              $('#sheet1').append('<option value="' + fileData.filename + '">' + date.replace("T", " ") + ' ' + loadCondition + '</option>');
+              $('#sheet2').append('<option value="' + fileData.filename + '">' + date.replace("T", " ") + ' ' + loadCondition + '</option>');
+            });
+          });
+
+        });
+
+      });
+
+      trAnalizeBtn.addEventListener('click', function () {
+        $.ajax({
+          url: 'php/data.php',
+          method: 'post',
+          data: 'getAnalizeData1=' + sheet1.value + '&getAnalizeData2=' + sheet2.value
+        }).done(function (alanizeData) {
+          alanizeData = JSON.parse(alanizeData);
+          console.log(alanizeData);
+          $('#trTblBody').empty();
+          alanizeData.forEach(function (alanizeData) {
+            $('#trTblBody').append('<tr></td><td>' + alanizeData.voltage + '</td><td>' + alanizeData.phase + '</td><td>' + alanizeData.LF + ' %</td><td>' + alanizeData.HF + ' %</td><td>' + alanizeData.FF + ' %</td><td></td></tr>');
+          });
+
+        });
+
+      });
+
+    });
+  </script>
 </body>
 
 </html>
