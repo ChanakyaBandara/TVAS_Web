@@ -53,7 +53,7 @@ require 'Upload_file.php';
 	}
 
 	if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
-		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py 'TR_60MW_set1.xlsx' 'TR_60MW_set2.xlsx'");
+		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py '" .$_POST['getAnalizeData1']. "' '" .$_POST['getAnalizeData2']. "'");
 		echo $output;
 	}
 	

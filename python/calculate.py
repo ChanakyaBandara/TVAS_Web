@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import json
 import sys
-os.chdir(r'C:\\xampp\\htdocs\\TVAS_Web\\rawfiles')
+os.chdir(r'C:\\xampp\\htdocs\\TVAS_Web\\Upload')
 
 class excelFile:
     def __init__(self, name):
