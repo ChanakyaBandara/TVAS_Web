@@ -278,6 +278,7 @@
           method: 'post',
           data: 'getAnalizeData1=' + sheet1.value + '&getAnalizeData2=' + sheet2.value
         }).done(function (alanizeData) {
+          console.log(alanizeData);
           alanizeData = JSON.parse(alanizeData);
           console.log(alanizeData);
           $('#trTblBody').empty();

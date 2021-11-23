@@ -51,10 +51,17 @@ require 'Upload_file.php';
 		$trs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($trs);
 	}
+	//Windows
+	// if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
+	// 	$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'");
+	// 	echo $output;
+	// }
 
+	//Linux
 	if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
-		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py 'TR_60MW_set1.xlsx' 'TR_60MW_set2.xlsx'");
-		echo $output;
+		$command = "python3 /opt/lampp/htdocs/TVAS/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'";
+		$output = shell_exec($command);
+		echo $command;
 	}
 	
     if(isset($_POST['addDataFile'])){
