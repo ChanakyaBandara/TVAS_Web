@@ -53,7 +53,8 @@ require 'Upload_file.php';
 	}
 	//Windows
 	if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
-		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'");
+		$command = "powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'";
+		$output = shell_exec($command);
 		echo $output;
 	}
 
