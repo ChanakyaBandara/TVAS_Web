@@ -217,14 +217,34 @@
         method: 'post',
         data: 'loadTrTbl=' + 5
       }).done(function (trData) {
-        //console.log(modules);
+        console.log(trData);
         trData = JSON.parse(trData);
-        //console.log(log);
+        console.log(trData);
         //`trID`, `trName`, `location`, `capascity`, `phase`, `manufacture`, `year`
         $('#trTblBody').empty();
         trData.forEach(function (trData) {
           $('#trTblBody').append('<tr></td><td>' + trData.trName + '</td><td>' + trData.location + '</td><td>' + trData.phase + ' ph</td><td>' + trData.capascity + '</td><td>' + trData.manufacture + '</td><td>' + trData.year + '</td></tr>');
         });
+      });
+
+      $.ajax({
+        url: 'php/data.php',
+        method: 'post',
+        data: 'loadTrTbl=' + 5
+      }).done(function (trData) {
+        //console.log(trData);
+        trData = JSON.parse(trData);
+        console.log(trData);
+      });
+
+      $.ajax({
+        url: 'php/data.php',
+        method: 'post',
+        data: 'loadTrTbl=' + 5
+      }).done(function (trData) {
+        //console.log(trData);
+        trData = JSON.parse(trData);
+        console.log(trData);
       });
 
     });
