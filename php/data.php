@@ -83,7 +83,7 @@ require 'Upload_file.php';
 
 
         $db = new DbConnect;
-		$sql = "INSERT INTO `datafiles`(`trID`, `load_condition`, `date`, `fan`, `tap`, `filename`) VALUES (" . $trID . "," . $LCDrop . ",\"" . $trDate . "\",," . $fanCondition . "," . $tapPosition . "\"" . $file_new_name . "\");";
+		$sql = "INSERT INTO `datafiles`(`trID`, `load_condition`, `date`, `fan`, `tap`, `filename`) VALUES (" . $trID . "," . $LCDrop . ",\"" . $trDate . "\"," . $fanCondition . "," . $tapPosition . ",\"" . $file_new_name . "\");";
 
 		echo $sql;
 
@@ -99,8 +99,9 @@ require 'Upload_file.php';
 		{
 			$stmt = $conn->prepare($sql);
 			$stmt->execute();
-			echo '<script language="javascript">
-					window.alert("Data File Updated !")
+					echo '<script language="javascript">
+					window.alert("Data File Updated !");
+					window.location.href = "../add_data_table.html"
 					</script>';
 					exit();
     	}
@@ -109,7 +110,7 @@ require 'Upload_file.php';
 	if(isset($_POST['loadFileTbl'])) {
 		$db = new DbConnect;
 		$conn = $db->connect();
-		$stmt = $conn->prepare("SELECT * FROM `transformers`,`datafiles` WHERE transformers.trID=datafiles.trID;");
+		$stmt = $conn->prepare("SELECT * FROM `transformers`,`datafiles` WHERE transformers.trID=datafiles.trID ORDER BY DID DESC;");
 		$stmt->execute();
 		$dtfiles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($dtfiles);
