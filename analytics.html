@@ -161,6 +161,7 @@
                 <br>
                 <h4 class="card-title">Results</h4>
                 <br>
+                <h5 id="finalResult" class="menu-title"></h5>
                 </p>
                 <!-- <table class="table">
                   <thead>
@@ -220,6 +221,7 @@
   <script src="js/misc.js"></script>
   <script src="js/chart.js"></script>
   <script src="vendors/chart.js/Chart.min.js"></script>
+  <script src="LoadingSpinner/loading-spinner.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
   <!-- End custom js for this page -->
@@ -234,6 +236,8 @@
       var trCapacity = document.getElementById('trCapacity');
       var sheet1 = document.getElementById('sheet1');
       var sheet2 = document.getElementById('sheet2');
+
+      var classNameResult = [];
 
       trSearchBtn.addEventListener('click', function () {
         $.ajax({
@@ -287,66 +291,89 @@
       });
 
       trAnalizeBtn.addEventListener('click', function () {
+        Spinner();
+        Spinner.show();
         $.ajax({
           url: 'php/data.php',
           method: 'post',
           data: 'getAnalizeData1=' + sheet1.value + '&getAnalizeData2=' + sheet2.value
         }).done(function (alanizeData) {
           console.log(alanizeData);
-          //alanizeData = JSON.parse(alanizeData);
-          alanizeData = [{ "frequency": 50, "data": [{ "label": "LV-R", "val1": 0.0007257, "val2": 0.0007812, "percentage": 8 }, { "label": "LV-Y", "val1": 0.0007162, "val2": 0.000747138, "percentage": 4 }, { "label": "LV-B", "val1": 0.004279, "val2": 0.004701, "percentage": 10 }, { "label": "HV-R", "val1": 0.0001202, "val2": 0.0001338, "percentage": 11 }, { "label": "HV-Y", "val1": 0.000963, "val2": 0.001006, "percentage": 4 }, { "label": "HV-B", "val1": 0.004149, "val2": 0.004538, "percentage": 9 }] }, { "frequency": 100, "data": [{ "label": "LV-R", "val1": 0.144, "val2": 0.1413, "percentage": 2 }, { "label": "LV-Y", "val1": 0.0791, "val2": 0.06892, "percentage": 13 }, { "label": "LV-B", "val1": 0.2135, "val2": 0.18961, "percentage": 11 }, { "label": "HV-R", "val1": 0.00292082, "val2": 0.006733, "percentage": 131 }, { "label": "HV-Y", "val1": 0.04312, "val2": 0.03834, "percentage": 11 }, { "label": "HV-B", "val1": 0.02844, "val2": 0.06609, "percentage": 132 }] }, { "frequency": 150, "data": [{ "label": "LV-R", "val1": 0.002661, "val2": 0.003001, "percentage": 13 }, { "label": "LV-Y", "val1": 0.002579, "val2": 0.0031355, "percentage": 22 }, { "label": "LV-B", "val1": 0.002841, "val2": 0.00333, "percentage": 17 }, { "label": "HV-R", "val1": 4.907e-05, "val2": 5.812e-05, "percentage": 18 }, { "label": "HV-Y", "val1": 0.0004075, "val2": 0.000449, "percentage": 10 }, { "label": "HV-B", "val1": 0.0008668, "val2": 0.0009343, "percentage": 8 }] }, { "frequency": 200, "data": [{ "label": "LV-R", "val1": 0.36875, "val2": 0.03229, "percentage": 91 }, { "label": "LV-Y", "val1": 0.029554, "val2": 0.026, "percentage": 12 }, { "label": "LV-B", "val1": 0.028462, "val2": 0.02495, "percentage": 12 }, { "label": "HV-R", "val1": 0.25721, "val2": 0.01879, "percentage": 93 }, { "label": "HV-Y", "val1": 0.035534, "val2": 0.03244, "percentage": 9 }, { "label": "HV-B", "val1": 0.04114, "val2": 0.03368, "percentage": 18 }] }, { "frequency": 250, "data": [{ "label": "LV-R", "val1": 0.002597, "val2": 0.002772, "percentage": 7 }, { "label": "LV-Y", "val1": 0.0007496, "val2": 0.00085124, "percentage": 14 }, { "label": "LV-B", "val1": 0.005062, "val2": 0.005562, "percentage": 10 }, { "label": "HV-R", "val1": 0.009038, "val2": 0.010249, "percentage": 13 }, { "label": "HV-Y", "val1": 0.001245, "val2": 0.0013983, "percentage": 12 }, { "label": "HV-B", "val1": 0.001576, "val2": 0.0017741, "percentage": 13 }] }, { "frequency": 300, "data": [{ "label": "LV-R", "val1": 0.04636, "val2": 0.05187, "percentage": 12 }, { "label": "LV-Y", "val1": 0.1699, "val2": 0.19234, "percentage": 13 }, { "label": "LV-B", "val1": 0.1005, "val2": 0.01227, "percentage": 88 }, { "label": "HV-R", "val1": 0.0004995, "val2": 0.01442, "percentage": 2787 }, { "label": "HV-Y", "val1": 0.1051, "val2": 0.11987, "percentage": 14 }, { "label": "HV-B", "val1": 0.004721, "val2": 0.004502, "percentage": 5 }] }, { "frequency": 350, "data": [{ "label": "LV-R", "val1": 0.001276, "val2": 0.0013862, "percentage": 9 }, { "label": "LV-Y", "val1": 0.003345, "val2": 0.0037882, "percentage": 13 }, { "label": "LV-B", "val1": 0.002153, "val2": 0.0024697, "percentage": 15 }, { "label": "HV-R", "val1": 0.0001247, "val2": 0.00014244, "percentage": 14 }, { "label": "HV-Y", "val1": 0.001781, "val2": 0.0022406, "percentage": 26 }, { "label": "HV-B", "val1": 0.002913, "val2": 0.003855, "percentage": 32 }] }, { "frequency": 400, "data": [{ "label": "LV-R", "val1": 0.01179, "val2": 0.013368, "percentage": 13 }, { "label": "LV-Y", "val1": 0.02541, "val2": 0.029097, "percentage": 15 }, { "label": "LV-B", "val1": 0.01847, "val2": 0.02081, "percentage": 13 }, { "label": "HV-R", "val1": 0.0002867, "val2": 0.0004696, "percentage": 64 }, { "label": "HV-Y", "val1": 0.03342, "val2": 0.036798, "percentage": 10 }, { "label": "HV-B", "val1": 0.03977, "val2": 0.046089, "percentage": 16 }] }, { "frequency": 450, "data": [{ "label": "LV-R", "val1": 0.001028, "val2": 0.001204, "percentage": 17 }, { "label": "LV-Y", "val1": 0.00171, "val2": 0.001972, "percentage": 15 }, { "label": "LV-B", "val1": 0.001252, "val2": 0.0013952, "percentage": 11 }, { "label": "HV-R", "val1": 0.000506, "val2": 0.0005746, "percentage": 14 }, { "label": "HV-Y", "val1": 0.0009406, "val2": 0.0010598, "percentage": 13 }, { "label": "HV-B", "val1": 0.00123, "val2": 0.0013986, "percentage": 14 }] }, { "frequency": 500, "data": [{ "label": "LV-R", "val1": 0.07984, "val2": 0.08592, "percentage": 8 }, { "label": "LV-Y", "val1": 0.05316, "val2": 0.05953, "percentage": 12 }, { "label": "LV-B", "val1": 0.165, "val2": 0.18244, "percentage": 11 }, { "label": "HV-R", "val1": 0.02458, "val2": 0.031801, "percentage": 29 }, { "label": "HV-Y", "val1": 0.05194, "val2": 0.05871, "percentage": 13 }, { "label": "HV-B", "val1": 0.1092, "val2": 0.12533, "percentage": 15 }] }, { "frequency": 800, "data": [{ "label": "LV-R", "val1": 0.01209, "val2": 0.013324, "percentage": 10 }, { "label": "LV-Y", "val1": 0.006237, "val2": 0.007165, "percentage": 15 }, { "label": "LV-B", "val1": 0.03358, "val2": 0.036142, "percentage": 8 }, { "label": "HV-R", "val1": 9.054e-05, "val2": 0.0001229, "percentage": 36 }, { "label": "HV-Y", "val1": 0.001391, "val2": 0.00154707, "percentage": 11 }, { "label": "HV-B", "val1": 0.02731, "val2": 0.032649, "percentage": 20 }] }, { "frequency": 900, "data": [{ "label": "LV-R", "val1": 0.01143, "val2": 0.01458, "percentage": 28 }, { "label": "LV-Y", "val1": 0.01105, "val2": 0.012388, "percentage": 12 }, { "label": "LV-B", "val1": 0.01687, "val2": 0.0219, "percentage": 30 }, { "label": "HV-R", "val1": 0.0001433, "val2": 0.00015753, "percentage": 10 }, { "label": "HV-Y", "val1": 0.005653, "val2": 0.0063183, "percentage": 12 }, { "label": "HV-B", "val1": 0.005207, "val2": 0.0061822, "percentage": 19 }] }, { "frequency": 1000, "data": [{ "label": "LV-R", "val1": 0.02796, "val2": 0.028885, "percentage": 3 }, { "label": "LV-Y", "val1": 0.01496, "val2": 0.016128, "percentage": 8 }, { "label": "LV-B", "val1": 0.01384, "val2": 0.0144669, "percentage": 5 }, { "label": "HV-R", "val1": 0.001612, "val2": 0.0018125, "percentage": 12 }, { "label": "HV-Y", "val1": 0.01555, "val2": 0.01782963, "percentage": 15 }, { "label": "HV-B", "val1": 0.00537, "val2": 0.005901, "percentage": 10 }] }];
+          alanizeData = JSON.parse(alanizeData);
+          //alanizeData = [{ "frequency": 50, "data": [{ "label": "LV-R", "val1": 0.0007257, "val2": 0.0007812, "percentage": 8 }, { "label": "LV-Y", "val1": 0.0007162, "val2": 0.000747138, "percentage": 4 }, { "label": "LV-B", "val1": 0.004279, "val2": 0.004701, "percentage": 10 }, { "label": "HV-R", "val1": 0.0001202, "val2": 0.0001338, "percentage": 11 }, { "label": "HV-Y", "val1": 0.000963, "val2": 0.001006, "percentage": 4 }, { "label": "HV-B", "val1": 0.004149, "val2": 0.004538, "percentage": 9 }] }, { "frequency": 100, "data": [{ "label": "LV-R", "val1": 0.144, "val2": 0.1413, "percentage": 2 }, { "label": "LV-Y", "val1": 0.0791, "val2": 0.06892, "percentage": 13 }, { "label": "LV-B", "val1": 0.2135, "val2": 0.18961, "percentage": 11 }, { "label": "HV-R", "val1": 0.00292082, "val2": 0.006733, "percentage": 131 }, { "label": "HV-Y", "val1": 0.04312, "val2": 0.03834, "percentage": 11 }, { "label": "HV-B", "val1": 0.02844, "val2": 0.06609, "percentage": 132 }] }, { "frequency": 150, "data": [{ "label": "LV-R", "val1": 0.002661, "val2": 0.003001, "percentage": 13 }, { "label": "LV-Y", "val1": 0.002579, "val2": 0.0031355, "percentage": 22 }, { "label": "LV-B", "val1": 0.002841, "val2": 0.00333, "percentage": 17 }, { "label": "HV-R", "val1": 4.907e-05, "val2": 5.812e-05, "percentage": 18 }, { "label": "HV-Y", "val1": 0.0004075, "val2": 0.000449, "percentage": 10 }, { "label": "HV-B", "val1": 0.0008668, "val2": 0.0009343, "percentage": 8 }] }, { "frequency": 200, "data": [{ "label": "LV-R", "val1": 0.36875, "val2": 0.03229, "percentage": 91 }, { "label": "LV-Y", "val1": 0.029554, "val2": 0.026, "percentage": 12 }, { "label": "LV-B", "val1": 0.028462, "val2": 0.02495, "percentage": 12 }, { "label": "HV-R", "val1": 0.25721, "val2": 0.01879, "percentage": 93 }, { "label": "HV-Y", "val1": 0.035534, "val2": 0.03244, "percentage": 9 }, { "label": "HV-B", "val1": 0.04114, "val2": 0.03368, "percentage": 18 }] }, { "frequency": 250, "data": [{ "label": "LV-R", "val1": 0.002597, "val2": 0.002772, "percentage": 7 }, { "label": "LV-Y", "val1": 0.0007496, "val2": 0.00085124, "percentage": 14 }, { "label": "LV-B", "val1": 0.005062, "val2": 0.005562, "percentage": 10 }, { "label": "HV-R", "val1": 0.009038, "val2": 0.010249, "percentage": 13 }, { "label": "HV-Y", "val1": 0.001245, "val2": 0.0013983, "percentage": 12 }, { "label": "HV-B", "val1": 0.001576, "val2": 0.0017741, "percentage": 13 }] }, { "frequency": 300, "data": [{ "label": "LV-R", "val1": 0.04636, "val2": 0.05187, "percentage": 12 }, { "label": "LV-Y", "val1": 0.1699, "val2": 0.19234, "percentage": 13 }, { "label": "LV-B", "val1": 0.1005, "val2": 0.01227, "percentage": 88 }, { "label": "HV-R", "val1": 0.0004995, "val2": 0.01442, "percentage": 2787 }, { "label": "HV-Y", "val1": 0.1051, "val2": 0.11987, "percentage": 14 }, { "label": "HV-B", "val1": 0.004721, "val2": 0.004502, "percentage": 5 }] }, { "frequency": 350, "data": [{ "label": "LV-R", "val1": 0.001276, "val2": 0.0013862, "percentage": 9 }, { "label": "LV-Y", "val1": 0.003345, "val2": 0.0037882, "percentage": 13 }, { "label": "LV-B", "val1": 0.002153, "val2": 0.0024697, "percentage": 15 }, { "label": "HV-R", "val1": 0.0001247, "val2": 0.00014244, "percentage": 14 }, { "label": "HV-Y", "val1": 0.001781, "val2": 0.0022406, "percentage": 26 }, { "label": "HV-B", "val1": 0.002913, "val2": 0.003855, "percentage": 32 }] }, { "frequency": 400, "data": [{ "label": "LV-R", "val1": 0.01179, "val2": 0.013368, "percentage": 13 }, { "label": "LV-Y", "val1": 0.02541, "val2": 0.029097, "percentage": 15 }, { "label": "LV-B", "val1": 0.01847, "val2": 0.02081, "percentage": 13 }, { "label": "HV-R", "val1": 0.0002867, "val2": 0.0004696, "percentage": 64 }, { "label": "HV-Y", "val1": 0.03342, "val2": 0.036798, "percentage": 10 }, { "label": "HV-B", "val1": 0.03977, "val2": 0.046089, "percentage": 16 }] }, { "frequency": 450, "data": [{ "label": "LV-R", "val1": 0.001028, "val2": 0.001204, "percentage": 17 }, { "label": "LV-Y", "val1": 0.00171, "val2": 0.001972, "percentage": 15 }, { "label": "LV-B", "val1": 0.001252, "val2": 0.0013952, "percentage": 11 }, { "label": "HV-R", "val1": 0.000506, "val2": 0.0005746, "percentage": 14 }, { "label": "HV-Y", "val1": 0.0009406, "val2": 0.0010598, "percentage": 13 }, { "label": "HV-B", "val1": 0.00123, "val2": 0.0013986, "percentage": 14 }] }, { "frequency": 500, "data": [{ "label": "LV-R", "val1": 0.07984, "val2": 0.08592, "percentage": 8 }, { "label": "LV-Y", "val1": 0.05316, "val2": 0.05953, "percentage": 12 }, { "label": "LV-B", "val1": 0.165, "val2": 0.18244, "percentage": 11 }, { "label": "HV-R", "val1": 0.02458, "val2": 0.031801, "percentage": 29 }, { "label": "HV-Y", "val1": 0.05194, "val2": 0.05871, "percentage": 13 }, { "label": "HV-B", "val1": 0.1092, "val2": 0.12533, "percentage": 15 }] }, { "frequency": 800, "data": [{ "label": "LV-R", "val1": 0.01209, "val2": 0.013324, "percentage": 10 }, { "label": "LV-Y", "val1": 0.006237, "val2": 0.007165, "percentage": 15 }, { "label": "LV-B", "val1": 0.03358, "val2": 0.036142, "percentage": 8 }, { "label": "HV-R", "val1": 9.054e-05, "val2": 0.0001229, "percentage": 36 }, { "label": "HV-Y", "val1": 0.001391, "val2": 0.00154707, "percentage": 11 }, { "label": "HV-B", "val1": 0.02731, "val2": 0.032649, "percentage": 20 }] }, { "frequency": 900, "data": [{ "label": "LV-R", "val1": 0.01143, "val2": 0.01458, "percentage": 28 }, { "label": "LV-Y", "val1": 0.01105, "val2": 0.012388, "percentage": 12 }, { "label": "LV-B", "val1": 0.01687, "val2": 0.0219, "percentage": 30 }, { "label": "HV-R", "val1": 0.0001433, "val2": 0.00015753, "percentage": 10 }, { "label": "HV-Y", "val1": 0.005653, "val2": 0.0063183, "percentage": 12 }, { "label": "HV-B", "val1": 0.005207, "val2": 0.0061822, "percentage": 19 }] }, { "frequency": 1000, "data": [{ "label": "LV-R", "val1": 0.02796, "val2": 0.028885, "percentage": 3 }, { "label": "LV-Y", "val1": 0.01496, "val2": 0.016128, "percentage": 8 }, { "label": "LV-B", "val1": 0.01384, "val2": 0.0144669, "percentage": 5 }, { "label": "HV-R", "val1": 0.001612, "val2": 0.0018125, "percentage": 12 }, { "label": "HV-Y", "val1": 0.01555, "val2": 0.01782963, "percentage": 15 }, { "label": "HV-B", "val1": 0.00537, "val2": 0.005901, "percentage": 10 }] }];
           console.log(alanizeData);
           $('#trTblBody').empty();
           // alanizeData.forEach(function (alanizeData) {
           //   $('#trTblBody').append('<tr></td><td>' + alanizeData.voltage + '</td><td>' + alanizeData.phase + '</td><td>' + alanizeData.LF + ' %</td><td>' + alanizeData.HF + ' %</td><td>' + alanizeData.FF + ' %</td><td></td></tr>');
           // });
-          loadDataTable(alanizeData)
+          loadDataTable(alanizeData);
+          Spinner.hide();
         });
-
       });
 
     });
     function loadDataTable(values) {
-      const str = '<tr><td rowspan="15">LV</td><td rowspan="5">R</td><td>100</td><td>'+ values[1].data[0].percentage +' %</td><td>800</td><td>'+ values[10].data[0].percentage +' %</td><td>50</td><td>'+ values[0].data[0].percentage +' %</td><td id="result1" rowspan="5"></td></tr>' +
-        '<tr><td>200</td><td>'+ values[3].data[0].percentage +' %</td><td>900</td><td>'+ values[11].data[0].percentage +' %</td><td>150</td><td>'+ values[2].data[0].percentage +' %</td></tr>' +
-        '<tr><td>300</td><td>'+ values[5].data[0].percentage +' %</td><td>1000</td><td>'+ values[12].data[0].percentage +' %</td><td>250</td><td>'+ values[4].data[0].percentage +' %</td></tr>' +
-        '<tr><td>400</td><td>'+ values[7].data[0].percentage +' %</td><td></td><td></td><td>350</td><td>'+ values[6].data[0].percentage +' %</td></tr>' +
-        '<tr><td>500</td><td>'+ values[9].data[0].percentage +' %</td><td></td><td></td><td>450</td><td>'+ values[8].data[0].percentage +' %</td></tr>' +
-        '<tr><td rowspan="5">Y</td><td>100</td><td>'+ values[1].data[1].percentage +' %</td><td>800</td><td>'+ values[10].data[1].percentage +' %</td><td>50</td><td>'+ values[0].data[1].percentage +' %</td><td id="result2" rowspan="5"></td></tr>' +
-        '<tr><td>200</td><td>'+ values[3].data[1].percentage +' %</td><td>900</td><td>'+ values[11].data[1].percentage +' %</td><td>150</td><td>'+ values[2].data[1].percentage +' %</td></tr>' +
-        '<tr><td>300</td><td>'+ values[5].data[1].percentage +' %</td><td>1000</td><td>'+ values[12].data[1].percentage +' %</td><td>250</td><td>'+ values[4].data[1].percentage +' %</td></tr>' +
-        '<tr><td>400</td><td>'+ values[7].data[1].percentage +' %</td><td></td><td></td><td>350</td><td>'+ values[6].data[1].percentage +' %</td></tr>' +
-        '<tr><td>500</td><td>'+ values[9].data[1].percentage +' %</td><td></td><td></td><td>450</td><td>'+ values[8].data[1].percentage +' %</td></tr>' +
-        '<tr><td rowspan="5">B</td><td>100</td><td>'+ values[1].data[2].percentage +' %</td><td>800</td><td>'+ values[10].data[2].percentage +' %</td><td>50</td><td>'+ values[0].data[2].percentage +' %</td><td id="result3" rowspan="5"></td></tr>' +
-        '<tr><td>200</td><td>'+ values[3].data[2].percentage +' %</td><td>900</td><td>'+ values[11].data[2].percentage +' %</td><td>150</td><td>'+ values[2].data[2].percentage +' %</td></tr>' +
-        '<tr><td>300</td><td>'+ values[5].data[2].percentage +' %</td><td>1000</td><td>'+ values[12].data[2].percentage +' %</td><td>250</td><td>'+ values[4].data[2].percentage +' %</td></tr>' +
-        '<tr><td>400</td><td>'+ values[7].data[2].percentage +' %</td><td></td><td></td><td>350</td><td>'+ values[6].data[2].percentage +' %</td></tr>' +
-        '<tr><td>500</td><td>'+ values[9].data[2].percentage +' %</td><td></td><td></td><td>450</td><td>'+ values[8].data[2].percentage +' %</td></tr>' +
-        '<tr><td rowspan="15">HV</td><td rowspan="5">R</td><td>100</td><td>'+ values[1].data[3].percentage +' %</td><td>800</td><td>'+ values[10].data[3].percentage +' %</td><td>50</td><td>'+ values[0].data[3].percentage +' %</td><td id="result4" rowspan="5"></td></tr>' +
-        '<tr><td>200</td><td>'+ values[3].data[3].percentage +' %</td><td>900</td><td>'+ values[11].data[3].percentage +' %</td><td>150</td><td>'+ values[2].data[3].percentage +' %</td></tr>' +
-        '<tr><td>300</td><td>'+ values[5].data[3].percentage +' %</td><td>1000</td><td>'+ values[12].data[3].percentage +' %</td><td>250</td><td>'+ values[4].data[3].percentage +' %</td></tr>' +
-        '<tr><td>400</td><td>'+ values[7].data[3].percentage +' %</td><td></td><td></td><td>350</td><td>'+ values[6].data[3].percentage +' %</td></tr>' +
-        '<tr><td>500</td><td>'+ values[9].data[3].percentage +' %</td><td></td><td></td><td>450</td><td>'+ values[8].data[3].percentage +' %</td></tr>' +
-        '<tr><td rowspan="5">Y</td><td>100</td><td>'+ values[1].data[4].percentage +' %</td><td>800</td><td>'+ values[10].data[4].percentage +' %</td><td>50</td><td>'+ values[0].data[4].percentage +' %</td><td id="result5" rowspan="5"></td></tr>' +
-        '<tr><td>200</td><td>'+ values[3].data[4].percentage +' %</td><td>900</td><td>'+ values[11].data[4].percentage +' %</td><td>150</td><td>'+ values[2].data[4].percentage +' %</td></tr>' +
-        '<tr><td>300</td><td>'+ values[5].data[4].percentage +' %</td><td>1000</td><td>'+ values[12].data[4].percentage +' %</td><td>250</td><td>'+ values[4].data[4].percentage +' %</td></tr>' +
-        '<tr><td>400</td><td>'+ values[7].data[4].percentage +' %</td><td></td><td></td><td>350</td><td>'+ values[6].data[4].percentage +' %</td></tr>' +
-        '<tr><td>500</td><td>'+ values[9].data[4].percentage +' %</td><td></td><td></td><td>450</td><td>'+ values[8].data[4].percentage +' %</td></tr>' +
-        '<tr><td rowspan="5">B</td><td>100</td><td>'+ values[1].data[5].percentage +' %</td><td>800</td><td>'+ values[10].data[5].percentage +' %</td><td>50</td><td>'+ values[0].data[5].percentage +' %</td><td id="result6" rowspan="5"></td></tr>' +
-        '<tr><td>200</td><td>'+ values[3].data[5].percentage +' %</td><td>900</td><td>'+ values[11].data[5].percentage +' %</td><td>150</td><td>'+ values[2].data[5].percentage +' %</td></tr>' +
-        '<tr><td>300</td><td>'+ values[5].data[5].percentage +' %</td><td>1000</td><td>'+ values[12].data[5].percentage +' %</td><td>250</td><td>'+ values[4].data[5].percentage +' %</td></tr>' +
-        '<tr><td>400</td><td>'+ values[7].data[5].percentage +' %</td><td></td><td></td><td>350</td><td>'+ values[6].data[5].percentage +' %</td></tr>' +
-        '<tr><td>500</td><td>'+ values[9].data[5].percentage +' %</td><td></td><td></td><td>450</td><td>'+ values[8].data[5].percentage +' %</td></tr>';
-
+      const str = '<tr><td rowspan="15">LV</td><td rowspan="5">R</td><td>100</td><td>' + values[1].data[0].percentage + ' %</td><td>800</td><td>' + values[10].data[0].percentage + ' %</td><td>50</td><td>' + values[0].data[0].percentage + ' %</td><td id="result1" rowspan="5"></td></tr>' +
+        '<tr><td>200</td><td>' + values[3].data[0].percentage + ' %</td><td>900</td><td>' + values[11].data[0].percentage + ' %</td><td>150</td><td>' + values[2].data[0].percentage + ' %</td></tr>' +
+        '<tr><td>300</td><td>' + values[5].data[0].percentage + ' %</td><td>1000</td><td>' + values[12].data[0].percentage + ' %</td><td>250</td><td>' + values[4].data[0].percentage + ' %</td></tr>' +
+        '<tr><td>400</td><td>' + values[7].data[0].percentage + ' %</td><td></td><td></td><td>350</td><td>' + values[6].data[0].percentage + ' %</td></tr>' +
+        '<tr><td>500</td><td>' + values[9].data[0].percentage + ' %</td><td></td><td></td><td>450</td><td>' + values[8].data[0].percentage + ' %</td></tr>' +
+        '<tr><td rowspan="5">Y</td><td>100</td><td>' + values[1].data[1].percentage + ' %</td><td>800</td><td>' + values[10].data[1].percentage + ' %</td><td>50</td><td>' + values[0].data[1].percentage + ' %</td><td id="result2" rowspan="5"></td></tr>' +
+        '<tr><td>200</td><td>' + values[3].data[1].percentage + ' %</td><td>900</td><td>' + values[11].data[1].percentage + ' %</td><td>150</td><td>' + values[2].data[1].percentage + ' %</td></tr>' +
+        '<tr><td>300</td><td>' + values[5].data[1].percentage + ' %</td><td>1000</td><td>' + values[12].data[1].percentage + ' %</td><td>250</td><td>' + values[4].data[1].percentage + ' %</td></tr>' +
+        '<tr><td>400</td><td>' + values[7].data[1].percentage + ' %</td><td></td><td></td><td>350</td><td>' + values[6].data[1].percentage + ' %</td></tr>' +
+        '<tr><td>500</td><td>' + values[9].data[1].percentage + ' %</td><td></td><td></td><td>450</td><td>' + values[8].data[1].percentage + ' %</td></tr>' +
+        '<tr><td rowspan="5">B</td><td>100</td><td>' + values[1].data[2].percentage + ' %</td><td>800</td><td>' + values[10].data[2].percentage + ' %</td><td>50</td><td>' + values[0].data[2].percentage + ' %</td><td id="result3" rowspan="5"></td></tr>' +
+        '<tr><td>200</td><td>' + values[3].data[2].percentage + ' %</td><td>900</td><td>' + values[11].data[2].percentage + ' %</td><td>150</td><td>' + values[2].data[2].percentage + ' %</td></tr>' +
+        '<tr><td>300</td><td>' + values[5].data[2].percentage + ' %</td><td>1000</td><td>' + values[12].data[2].percentage + ' %</td><td>250</td><td>' + values[4].data[2].percentage + ' %</td></tr>' +
+        '<tr><td>400</td><td>' + values[7].data[2].percentage + ' %</td><td></td><td></td><td>350</td><td>' + values[6].data[2].percentage + ' %</td></tr>' +
+        '<tr><td>500</td><td>' + values[9].data[2].percentage + ' %</td><td></td><td></td><td>450</td><td>' + values[8].data[2].percentage + ' %</td></tr>' +
+        '<tr><td rowspan="15">HV</td><td rowspan="5">R</td><td>100</td><td>' + values[1].data[3].percentage + ' %</td><td>800</td><td>' + values[10].data[3].percentage + ' %</td><td>50</td><td>' + values[0].data[3].percentage + ' %</td><td id="result4" rowspan="5"></td></tr>' +
+        '<tr><td>200</td><td>' + values[3].data[3].percentage + ' %</td><td>900</td><td>' + values[11].data[3].percentage + ' %</td><td>150</td><td>' + values[2].data[3].percentage + ' %</td></tr>' +
+        '<tr><td>300</td><td>' + values[5].data[3].percentage + ' %</td><td>1000</td><td>' + values[12].data[3].percentage + ' %</td><td>250</td><td>' + values[4].data[3].percentage + ' %</td></tr>' +
+        '<tr><td>400</td><td>' + values[7].data[3].percentage + ' %</td><td></td><td></td><td>350</td><td>' + values[6].data[3].percentage + ' %</td></tr>' +
+        '<tr><td>500</td><td>' + values[9].data[3].percentage + ' %</td><td></td><td></td><td>450</td><td>' + values[8].data[3].percentage + ' %</td></tr>' +
+        '<tr><td rowspan="5">Y</td><td>100</td><td>' + values[1].data[4].percentage + ' %</td><td>800</td><td>' + values[10].data[4].percentage + ' %</td><td>50</td><td>' + values[0].data[4].percentage + ' %</td><td id="result5" rowspan="5"></td></tr>' +
+        '<tr><td>200</td><td>' + values[3].data[4].percentage + ' %</td><td>900</td><td>' + values[11].data[4].percentage + ' %</td><td>150</td><td>' + values[2].data[4].percentage + ' %</td></tr>' +
+        '<tr><td>300</td><td>' + values[5].data[4].percentage + ' %</td><td>1000</td><td>' + values[12].data[4].percentage + ' %</td><td>250</td><td>' + values[4].data[4].percentage + ' %</td></tr>' +
+        '<tr><td>400</td><td>' + values[7].data[4].percentage + ' %</td><td></td><td></td><td>350</td><td>' + values[6].data[4].percentage + ' %</td></tr>' +
+        '<tr><td>500</td><td>' + values[9].data[4].percentage + ' %</td><td></td><td></td><td>450</td><td>' + values[8].data[4].percentage + ' %</td></tr>' +
+        '<tr><td rowspan="5">B</td><td>100</td><td>' + values[1].data[5].percentage + ' %</td><td>800</td><td>' + values[10].data[5].percentage + ' %</td><td>50</td><td>' + values[0].data[5].percentage + ' %</td><td id="result6" rowspan="5"></td></tr>' +
+        '<tr><td>200</td><td>' + values[3].data[5].percentage + ' %</td><td>900</td><td>' + values[11].data[5].percentage + ' %</td><td>150</td><td>' + values[2].data[5].percentage + ' %</td></tr>' +
+        '<tr><td>300</td><td>' + values[5].data[5].percentage + ' %</td><td>1000</td><td>' + values[12].data[5].percentage + ' %</td><td>250</td><td>' + values[4].data[5].percentage + ' %</td></tr>' +
+        '<tr><td>400</td><td>' + values[7].data[5].percentage + ' %</td><td></td><td></td><td>350</td><td>' + values[6].data[5].percentage + ' %</td></tr>' +
+        '<tr><td>500</td><td>' + values[9].data[5].percentage + ' %</td><td></td><td></td><td>450</td><td>' + values[8].data[5].percentage + ' %</td></tr>';
+      classNameResult = [];
       $('#trTblBody').append(str);
-      
       for (let i = 0; i < 6; i++) {
-        const Lf = Number(values[1].data[i].percentage + values[3].data[i].percentage + values[5].data[i].percentage + values[7].data[i].percentage + values[9].data[i].percentage)/5
-        const Hf = Number(values[10].data[i].percentage + values[11].data[i].percentage + values[12].data[i].percentage)/3
-        const Mf = Number(values[0].data[i].percentage + values[2].data[i].percentage + values[4].data[i].percentage + values[6].data[i].percentage + values[8].data[i].percentage)/5
-        const result = ((Lf*50)+(Hf*30)+(Mf*20))/100
-        console.log("result"+i,result)
-        document.getElementById("result"+String(i+1)).innerHTML = result.toFixed(2);
+        const Lf = Number(values[1].data[i].percentage + values[3].data[i].percentage + values[5].data[i].percentage + values[7].data[i].percentage + values[9].data[i].percentage) / 5
+        const Hf = Number(values[10].data[i].percentage + values[11].data[i].percentage + values[12].data[i].percentage) / 3
+        const Mf = Number(values[0].data[i].percentage + values[2].data[i].percentage + values[4].data[i].percentage + values[6].data[i].percentage + values[8].data[i].percentage) / 5
+        const result = ((Lf * 50) + (Hf * 30) + (Mf * 20)) / 100
+        console.log("result" + i, result)
+        classNameResult.push(result.toFixed(2))
+        document.getElementById("result" + String(i + 1)).innerHTML = result.toFixed(2)+"%";
+        document.getElementById("result" + String(i + 1)).style.color = getTdColour(result.toFixed(2));
+      }
+      getClassName();
+    }
+    //getTdColour
+    function getTdColour(val) {
+      if (val > 20) {
+        return "red"
+      } else if (val > 15) {
+        return "blue"
+      } else {
+        return "green"
+      }
+    }
+    function getClassName() {
+      if (classNameResult.some((item)=>item > 20)) {
+        document.getElementById("finalResult").innerHTML = "Class C"
+      } else if (classNameResult.some((item)=>item > 15)) {
+        document.getElementById("finalResult").innerHTML = "Class B"
+      } else {
+        document.getElementById("finalResult").innerHTML = "Class A"
       }
     }
   </script>

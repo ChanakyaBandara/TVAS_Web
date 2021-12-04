@@ -52,17 +52,17 @@ require 'Upload_file.php';
 		echo json_encode($trs);
 	}
 	//Windows
-	// if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
-	// 	$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'");
-	// 	echo $output;
-	// }
-
-	//Linux
 	if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
-		$command = "python3 /opt/lampp/htdocs/TVAS/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'";
-		$output = shell_exec("python3 /opt/lampp/htdocs/TVAS/python/calculate2.py '619facfee81f51.24360656.xlsx' '619fad17cb0538.61721619.xlsx'");
+		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'");
 		echo $output;
 	}
+
+	//Linux
+	// if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
+	// 	$command = "python3 /opt/lampp/htdocs/TVAS/python/calculate2.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'";
+	// 	$output = shell_exec("python3 /opt/lampp/htdocs/TVAS/python/calculate2.py '619facfee81f51.24360656.xlsx' '619fad17cb0538.61721619.xlsx'");
+	// 	echo $output;
+	// }
 	
     if(isset($_POST['addDataFile'])){
 		

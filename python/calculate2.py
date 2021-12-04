@@ -3,8 +3,8 @@ import pandas as pd
 import os
 import json
 import sys
-#os.chdir(r'C:\\xampp\\htdocs\\TVAS_Web\\Upload')  #on Windows
-os.chdir(r'/opt/lampp/htdocs/TVAS/Upload')  #on Linux
+os.chdir(r'C:\\xampp\\htdocs\\TVAS_Web\\Upload')  #on Windows
+#os.chdir(r'/opt/lampp/htdocs/TVAS/Upload')  #on Linux
 
 class excelFile:
     def __init__(self, name):
