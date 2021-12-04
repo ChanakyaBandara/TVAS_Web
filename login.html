@@ -73,9 +73,9 @@
 
   loginBtn.addEventListener('click', function () {
     if(txtEmail.value === "admin@gmail.com" && txtPass.value === "admin"){
-      console.log("paass");
+      window.location.replace("index.html");
     }else{
-      console.log("fail");
+      alert("please enter valid login credentials");
     }
    });
 </script>
