@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>View Data Table</title>
+  <title>View Vibaration Data</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
@@ -85,13 +85,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="add_data_table.html">
-              <span class="menu-title">Add Data Table</span>
+              <span class="menu-title">Add Vibaration Data</span>
               <i class="mdi mdi-basket menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="view_data_table.html">
-              <span class="menu-title">View Data Table</span>
+              <span class="menu-title">View Vibaration Data</span>
               <i class="mdi mdi-basket menu-icon"></i>
             </a>
           </li>
@@ -160,6 +160,8 @@
                       <th> Capacity </th>
                       <th> Phase </th>
                       <th> Location </th>
+                      <th> Fan Condition </th>
+                      <th> Tap Position </th>
                     </tr>
                   </thead>
                   <tbody id="dtTblBody">
@@ -219,17 +221,26 @@
         dtData.forEach(function (dtData) {
           var str = downloadbtn(dtData.filename);
           var str2 = graphbtn(dtData.filename);
-          $('#dtTblBody').append('<tr><td>' + dtData.DID + '</td><td>' + dtData.trName + '</td><td>' + dtData.date + '</td><td>' + load_condition(dtData.load_condition) + '</td><td>' + dtData.capascity + ' MVA</td><td>' + dtData.phase + ' ph</td><td>' + dtData.location + '</td><td>' + str + '</td><td>' + str2 + '</td></tr>');
+          var str3 = fan_condition(dtData.fan_condition);
+          $('#dtTblBody').append('<tr><td>' + dtData.DID + '</td><td>' + dtData.trName + '</td><td>' + dtData.date + '</td><td>' + load_condition(dtData.load_condition) + '</td><td>' + dtData.capascity + ' MVA</td><td>' + dtData.phase + ' ph</td><td>' + dtData.location + '</td><td>' + fan_condition(dtData.fan_condition) + '</td><td>' + dtData.tap + '</td><td>' + str + '</td><td>' + str2 + '</td></tr>');
         });
       });
 
       function load_condition(x) {
         if (x == 1) {
-          return "Full";
+          return "Non";
         } else if (x == 2) {
           return "Half";
         } else if (x == 3) {
-          return "Non";
+          return "Full";
+        }
+      }
+
+      function fan_condition(x) {
+        if (x == 1) {
+          return "ON";
+        } else {
+          return "OFF";
         }
       }
 

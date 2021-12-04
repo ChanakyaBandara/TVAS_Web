@@ -69,6 +69,8 @@ require 'Upload_file.php';
 		$trID = $_POST['trID'];
         $LCDrop = $_POST['LCDrop'];
         $trDate = $_POST['trDate'];
+        $fanCondition = $_POST['fanCondition'];
+        $tapPosition = $_POST['tapPosition'];
 
 		$file_new_name ="0";
 		
@@ -81,7 +83,7 @@ require 'Upload_file.php';
 
 
         $db = new DbConnect;
-		$sql = "INSERT INTO `datafiles`(`trID`, `load_condition`, `date`, `filename`) VALUES (" . $trID . "," . $LCDrop . ",\"" . $trDate . "\",\"" . $file_new_name . "\");";
+		$sql = "INSERT INTO `datafiles`(`trID`, `load_condition`, `date`, `fan`, `tap`, `filename`) VALUES (" . $trID . "," . $LCDrop . ",\"" . $trDate . "\",," . $fanCondition . "," . $tapPosition . "\"" . $file_new_name . "\");";
 
 		echo $sql;
 
