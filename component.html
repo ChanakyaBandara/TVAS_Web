@@ -120,7 +120,7 @@
           <div class="col-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">Analize Data</h4>
+                <h4 class="card-title">Compare Component Data</h4>
                 <p class="card-description"> Fill the fields below </p>
                 <div class="row">
                   <div class="col-md-4 d-flex align-items-center">
@@ -156,47 +156,9 @@
                       <input type="text" class="form-control" id="trCapacity" placeholder="Capacity" disabled>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <div class="col-sm-4">
-                      <select class="form-control" id="sheet1" name="sheet1">
-                      </select>
-                    </div>
-                    <div class="col-sm-4">
-                      <label class="col-form-label" style="text-align: center;">VS</label>
-                    </div>
-                    <div class="col-sm-4">
-                      <select class="form-control" id="sheet2" name="sheet2">
-                      </select>
-                    </div>
-                  </div>
                   <button type="button" id="analizeBtn" class="btn btn-gradient-primary mr-2">Analize</button>
                   <button type="reset" class="btn btn-warning">Clear</button>
                 </form>
-                <br>
-                <h4 class="card-title">Results</h4>
-                <br>
-                <div id="resultDiv" class="bg-primary">
-                  <h1 id="finalResult" class="menu-title float-right mb-5 mr-5 text-success"></h1>
-                  <p id="finalResultDesc"></p>
-                </div>
-                <br/>
-                <button class="btn btn-sm btn-gradient-primary" type="button" onclick="downloadPDF()">Download</button>
-                <div id="content">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th> LV / HV </th>
-                      <th> Phase</th>
-                      <th colspan="2"> LF </th>
-                      <th colspan="2"> HF </th>
-                      <th colspan="2"> 50Hz </th>
-                      <th> Result </th>
-                    </tr>
-                  </thead>
-                  <tbody id="trTblBody">
-                  </tbody>
-                </table>
-                </div>
               </div>
             </div>
           </div>
