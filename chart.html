@@ -1,361 +1,603 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+    <link rel="stylesheet" href="css/charts.css" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/charts.css">
-  <title>My Chart.js Chart</title>
-</head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Analytics</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style2.css" />
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <title>My Chart.js Chart</title>
+  </head>
 
-<body>
-  <input type="file" id="input">
-  <input type="file" id="input2">
-  <!-- <div class="container">
+  <body>
+    <div class="container-scroller">
+      <nav
+        class="
+          navbar
+          default-layout-navbar
+          col-lg-12 col-12
+          p-0
+          fixed-top
+          d-flex
+          flex-row
+        "
+      >
+        <div
+          class="
+            text-center
+            navbar-brand-wrapper
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+        >
+          <a class="navbar-brand brand-logo" href="index.html"
+            ><img src="images/logo-1.png" alt="logo"
+          /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"
+            ><img src="images/logo-mini.svg" alt="logo"
+          /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-logout d-none d-lg-block">
+              <a class="nav-link" href="#">
+                <i class="mdi mdi-power"></i>
+              </a>
+            </li>
+          </ul>
+          <button
+            class="
+              navbar-toggler navbar-toggler-right
+              d-lg-none
+              align-self-center
+            "
+            type="button"
+            data-toggle="offcanvas"
+          >
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="index.html" class="nav-link">
+                <div class="nav-profile-image">
+                  <img src="images/faces/face16.jpg" alt="profile" />
+                  <span class="login-status online"></span>
+                  <!--change to offline or busy as needed-->
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="font-weight-bold mb-2">Admin</span>
+                  <span class="text-secondary text-small">AD25B526</span>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_transformer.html">
+                <span class="menu-title">Add Transformers</span>
+                <i class="mdi mdi-bank menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="view_transformers.html">
+                <span class="menu-title">View Transformers</span>
+                <i class="mdi mdi-account menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_data_table.html">
+                <span class="menu-title">Add Vibaration Data</span>
+                <i class="mdi mdi-basket menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="view_data_table.html">
+                <span class="menu-title">View Vibaration Data</span>
+                <i class="mdi mdi-basket menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="analytics.html">
+                <span class="menu-title">Analytics</span>
+                <i class="mdi mdi-basket menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="component.html">
+                <span class="menu-title">Component</span>
+                <i class="mdi mdi-basket menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chart.html">
+                <span class="menu-title">Graph</span>
+                <i class="mdi mdi-basket menu-icon"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-6 stretch-card transparent mt-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Compare Component Data</h4>
+                    <div class="form-group row">
+                      <label for="file" class="col-sm-3 col-form-label"
+                        >Data File</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="input"
+                          placeholder="Name"
+                          name="file"
+                        />
+                      </div>
+                      <div class="chartAreaWrapper">
+                        <canvas id="myChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 stretch-card transparent mt-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Compare Component Data</h4>
+                    <div class="form-group row">
+                      <label for="file" class="col-sm-3 col-form-label"
+                        >Data File</label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="input2"
+                          placeholder="Name"
+                          name="file"
+                        />
+                      </div>
+                      <div class="chartAreaWrapper">
+                        <canvas id="myChart2"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div
+              class="
+                d-sm-flex
+                justify-content-center justify-content-sm-between
+              "
+            >
+              <span
+                class="
+                  text-muted text-center text-sm-left
+                  d-block d-sm-inline-block
+                "
+                >Copyright © 2021
+                <a href="https://www.sylabs.tech/" target="_blank">Sy Labs</a>.
+                All rights reserved.</span
+              >
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+    </div>
+    <!-- <div class="container">
     <canvas id="myChart" width="1400"></canvas>
   </div> -->
-  <div class="chartAreaWrapper">
-    <canvas id="myChart" width="1500"></canvas>
-  </div>
-  
-  <div class="chartAreaWrapper">
-    <canvas id="myChart2" width="1500"></canvas>
-  </div>
 
-  <script>
-    var dataXL;
-    var dataHeadings;
-    var dataXL2;
-    var dataHeadings2;
-    var input = document.getElementById('input');
-    var input2 = document.getElementById('input2');
+    <script>
+      var dataXL;
+      var dataHeadings;
+      var dataXL2;
+      var dataHeadings2;
+      var input = document.getElementById("input");
+      var input2 = document.getElementById("input2");
 
-    input.addEventListener('change', function () {
-      readXlsxFile(input.files[0]).then(function (data) {
-        console.log(data);
-        dataHeadings = data[0];
-        dataHeadings[0] = "Time";
-        console.log(dataHeadings);
-        dataXL = data;
-        dataXL.splice(0, 3);
+      input.addEventListener("change", function () {
+        readXlsxFile(input.files[0]).then(function (data) {
+          console.log(data);
+          dataHeadings = data[0];
+          dataHeadings[0] = "Time";
+          console.log(dataHeadings);
+          dataXL = data;
+          dataXL.splice(0, 3);
 
-        var subsections1 = dataXL.map(function (subarray) {
-          var val = subarray.slice(0, 1)
-          return val[0]
-        })
+          var subsections1 = dataXL.map(function (subarray) {
+            var val = subarray.slice(0, 1);
+            return val[0];
+          });
 
-        var subsections2 = dataXL.map(function (subarray) {
-          var val = subarray.slice(1, 2)
-          return val[0]
-        })
+          var subsections2 = dataXL.map(function (subarray) {
+            var val = subarray.slice(1, 2);
+            return val[0];
+          });
 
-        var subsections3 = dataXL.map(function (subarray) {
-          var val = subarray.slice(2, 3)
-          return val[0]
-        })
+          var subsections3 = dataXL.map(function (subarray) {
+            var val = subarray.slice(2, 3);
+            return val[0];
+          });
 
-        var subsections4 = dataXL.map(function (subarray) {
-          var val = subarray.slice(3, 4)
-          return val[0]
-        })
+          var subsections4 = dataXL.map(function (subarray) {
+            var val = subarray.slice(3, 4);
+            return val[0];
+          });
 
-        var subsections5 = dataXL.map(function (subarray) {
-          var val = subarray.slice(4, 5)
-          return val[0]
-        })
+          var subsections5 = dataXL.map(function (subarray) {
+            var val = subarray.slice(4, 5);
+            return val[0];
+          });
 
-        var subsections6 = dataXL.map(function (subarray) {
-          var val = subarray.slice(5, 6)
-          return val[0]
-        })
+          var subsections6 = dataXL.map(function (subarray) {
+            var val = subarray.slice(5, 6);
+            return val[0];
+          });
 
-        var subsections7 = dataXL.map(function (subarray) {
-          var val = subarray.slice(6, 7)
-          return val[0]
-        })
+          var subsections7 = dataXL.map(function (subarray) {
+            var val = subarray.slice(6, 7);
+            return val[0];
+          });
 
-        console.log(subsections1[subsections1.length - 1])
-        console.log(subsections1[0])
-        drawChart(subsections1, subsections2, subsections3, subsections4, subsections5, subsections6, subsections7);
+          console.log(subsections1[subsections1.length - 1]);
+          console.log(subsections1[0]);
+          drawChart(
+            subsections1,
+            subsections2,
+            subsections3,
+            subsections4,
+            subsections5,
+            subsections6,
+            subsections7
+          );
+        });
       });
-    });
 
-    
-    function drawChart(subsections1, subsections2, subsections3, subsections4, subsections5, subsections6, subsections7) {
-      var myChart = document.getElementById('myChart').getContext('2d');
-      // Global Options
-      Chart.defaults.global.defaultFontFamily = 'Lato';
-      Chart.defaults.global.defaultFontSize = 18;
-      Chart.defaults.global.defaultFontColor = '#777';
+      function drawChart(
+        subsections1,
+        subsections2,
+        subsections3,
+        subsections4,
+        subsections5,
+        subsections6,
+        subsections7
+      ) {
+        var myChart = document.getElementById("myChart").getContext("2d");
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = "Lato";
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = "#777";
 
-      var massPopChart = new Chart(myChart, {
-        type: 'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-        data: {
-          labels: subsections1,
-          datasets: [{
-            label: dataHeadings[1],
-            data: subsections2,
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(255, 99, 132, 0.6)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings[2],
-            data: subsections3,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(75, 192, 192, 0.6)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings[3],
-            data: subsections4,
-            backgroundColor: 'rgba(255, 205, 86)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(255, 205, 86)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings[4],
-            data: subsections5,
-            backgroundColor: 'rgba(201, 203, 207)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(201, 203, 207)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings[5],
-            data: subsections6,
-            backgroundColor: 'rgba(54, 162, 235)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(54, 162, 235)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings[6],
-            data: subsections7,
-            backgroundColor: 'rgba(236, 3, 252, 0.6)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(236, 3, 252, 0.6)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }]
-        },
-        options: {
-          plugins: {
-            autocolors: false,
-            annotation: {
-              annotations: {
-                line1: {
-                  type: 'line',
-                  yMin: 0.5,
-                  yMax: 0.5,
-                  borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 2,
-                }
-              }
-            }
+        var massPopChart = new Chart(myChart, {
+          type: "line", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+          data: {
+            labels: subsections1,
+            datasets: [
+              {
+                label: dataHeadings[1],
+                data: subsections2,
+                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(255, 99, 132, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[2],
+                data: subsections3,
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(75, 192, 192, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[3],
+                data: subsections4,
+                backgroundColor: "rgba(255, 205, 86)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(255, 205, 86)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[4],
+                data: subsections5,
+                backgroundColor: "rgba(201, 203, 207)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(201, 203, 207)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[5],
+                data: subsections6,
+                backgroundColor: "rgba(54, 162, 235)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(54, 162, 235)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[6],
+                data: subsections7,
+                backgroundColor: "rgba(236, 3, 252, 0.6)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(236, 3, 252, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+            ],
           },
-          title: {
-            display: true,
-            text: 'TR Vibrations',
-            fontSize: 25
+          options: {
+            plugins: {
+              autocolors: false,
+              annotation: {
+                annotations: {
+                  line1: {
+                    type: "line",
+                    yMin: 0.5,
+                    yMax: 0.5,
+                    borderColor: "rgb(255, 99, 132)",
+                    borderWidth: 2,
+                  },
+                },
+              },
+            },
+            title: {
+              display: true,
+              text: "TR Vibrations",
+              fontSize: 25,
+            },
+            legend: {
+              display: true,
+              position: "right",
+              labels: {
+                fontColor: "#000",
+              },
+            },
+            layout: {
+              padding: {
+                left: 50,
+                right: 0,
+                bottom: 0,
+                top: 0,
+              },
+            },
+            tooltips: {
+              enabled: true,
+            },
           },
-          legend: {
-            display: true,
-            position: 'right',
-            labels: {
-              fontColor: '#000'
-            }
-          },
-          layout: {
-            padding: {
-              left: 50,
-              right: 0,
-              bottom: 0,
-              top: 0
-            }
-          },
-          tooltips: {
-            enabled: true
-          }
-        }
+        });
+      }
+
+      input2.addEventListener("change", function () {
+        readXlsxFile(input2.files[0]).then(function (data) {
+          console.log(data);
+          dataHeadings2 = data[0];
+          dataHeadings2[0] = "Time";
+          console.log(dataHeadings2);
+          dataXL2 = data;
+          dataXL2.splice(0, 3);
+
+          var subsections1 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(0, 1);
+            return val[0];
+          });
+
+          var subsections2 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(1, 2);
+            return val[0];
+          });
+
+          var subsections3 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(2, 3);
+            return val[0];
+          });
+
+          var subsections4 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(3, 4);
+            return val[0];
+          });
+
+          var subsections5 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(4, 5);
+            return val[0];
+          });
+
+          var subsections6 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(5, 6);
+            return val[0];
+          });
+
+          var subsections7 = dataXL2.map(function (subarray) {
+            var val = subarray.slice(6, 7);
+            return val[0];
+          });
+
+          console.log(subsections1[subsections1.length - 1]);
+          console.log(subsections1[0]);
+          drawChart2(
+            subsections1,
+            subsections2,
+            subsections3,
+            subsections4,
+            subsections5,
+            subsections6,
+            subsections7
+          );
+        });
       });
-    }
 
-    input2.addEventListener('change', function () {
-      readXlsxFile(input2.files[0]).then(function (data) {
-        console.log(data);
-        dataHeadings2 = data[0];
-        dataHeadings2[0] = "Time";
-        console.log(dataHeadings2);
-        dataXL2 = data;
-        dataXL2.splice(0, 3);
+      function drawChart2(
+        subsections1,
+        subsections2,
+        subsections3,
+        subsections4,
+        subsections5,
+        subsections6,
+        subsections7
+      ) {
+        var myChart2 = document.getElementById("myChart2").getContext("2d");
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = "Lato";
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = "#777";
 
-        var subsections1 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(0, 1)
-          return val[0]
-        })
-
-        var subsections2 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(1, 2)
-          return val[0]
-        })
-
-        var subsections3 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(2, 3)
-          return val[0]
-        })
-
-        var subsections4 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(3, 4)
-          return val[0]
-        })
-
-        var subsections5 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(4, 5)
-          return val[0]
-        })
-
-        var subsections6 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(5, 6)
-          return val[0]
-        })
-
-        var subsections7 = dataXL2.map(function (subarray) {
-          var val = subarray.slice(6, 7)
-          return val[0]
-        })
-
-        console.log(subsections1[subsections1.length - 1])
-        console.log(subsections1[0])
-        drawChart2(subsections1, subsections2, subsections3, subsections4, subsections5, subsections6, subsections7);
-      });
-    });
-
-
-    function drawChart2(subsections1, subsections2, subsections3, subsections4, subsections5, subsections6, subsections7) {
-      var myChart2 = document.getElementById('myChart2').getContext('2d');
-      // Global Options
-      Chart.defaults.global.defaultFontFamily = 'Lato';
-      Chart.defaults.global.defaultFontSize = 18;
-      Chart.defaults.global.defaultFontColor = '#777';
-
-      var massPopChart = new Chart(myChart2, {
-        type: 'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-        data: {
-          labels: subsections1,
-          datasets: [{
-            label: dataHeadings2[1],
-            data: subsections2,
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(255, 99, 132, 0.6)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings2[2],
-            data: subsections3,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(75, 192, 192, 0.6)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings2[3],
-            data: subsections4,
-            backgroundColor: 'rgba(255, 205, 86)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(255, 205, 86)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings2[4],
-            data: subsections5,
-            backgroundColor: 'rgba(201, 203, 207)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(201, 203, 207)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings2[5],
-            data: subsections6,
-            backgroundColor: 'rgba(54, 162, 235)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(54, 162, 235)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }, {
-            label: dataHeadings2[6],
-            data: subsections7,
-            backgroundColor: 'rgba(236, 3, 252, 0.6)',
-            borderWidth: 1,
-            fill: false,
-            borderColor: 'rgba(236, 3, 252, 0.6)',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
-          }]
-        },
-        options: {
-          plugins: {
-            autocolors: false,
-            annotation: {
-              annotations: {
-                line1: {
-                  type: 'line',
-                  yMin: 0.5,
-                  yMax: 0.5,
-                  borderColor: 'rgb(255, 99, 132)',
-                  borderWidth: 2,
-                }
-              }
-            }
+        var massPopChart = new Chart(myChart2, {
+          type: "line", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+          data: {
+            labels: subsections1,
+            datasets: [
+              {
+                label: dataHeadings2[1],
+                data: subsections2,
+                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(255, 99, 132, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings2[2],
+                data: subsections3,
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(75, 192, 192, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings2[3],
+                data: subsections4,
+                backgroundColor: "rgba(255, 205, 86)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(255, 205, 86)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings2[4],
+                data: subsections5,
+                backgroundColor: "rgba(201, 203, 207)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(201, 203, 207)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings2[5],
+                data: subsections6,
+                backgroundColor: "rgba(54, 162, 235)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(54, 162, 235)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings2[6],
+                data: subsections7,
+                backgroundColor: "rgba(236, 3, 252, 0.6)",
+                borderWidth: 1,
+                fill: false,
+                borderColor: "rgba(236, 3, 252, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+            ],
           },
-          title: {
-            display: true,
-            text: 'TR Vibrations',
-            fontSize: 25
+          options: {
+            plugins: {
+              autocolors: false,
+              annotation: {
+                annotations: {
+                  line1: {
+                    type: "line",
+                    yMin: 0.5,
+                    yMax: 0.5,
+                    borderColor: "rgb(255, 99, 132)",
+                    borderWidth: 2,
+                  },
+                },
+              },
+            },
+            title: {
+              display: true,
+              text: "TR Vibrations",
+              fontSize: 25,
+            },
+            legend: {
+              display: true,
+              position: "right",
+              labels: {
+                fontColor: "#000",
+              },
+            },
+            layout: {
+              padding: {
+                left: 50,
+                right: 0,
+                bottom: 0,
+                top: 0,
+              },
+            },
+            tooltips: {
+              enabled: true,
+            },
           },
-          legend: {
-            display: true,
-            position: 'right',
-            labels: {
-              fontColor: '#000'
-            }
-          },
-          layout: {
-            padding: {
-              left: 50,
-              right: 0,
-              bottom: 0,
-              top: 0
-            }
-          },
-          tooltips: {
-            enabled: true
-          }
-        }
-      });
-    }
-  </script>
-</body>
-
+        });
+      }
+    </script>
+  </body>
 </html>
