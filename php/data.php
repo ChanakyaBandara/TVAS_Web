@@ -116,4 +116,23 @@ require 'Upload_file.php';
 		echo json_encode($dtfiles);
 	}
 
+
+	if(isset($_POST['DeleteDatabyID'])) {
+		$db = new DbConnect;
+		$conn = $db->connect();
+		$stmt = $conn->prepare("DELETE FROM `datafiles` WHERE `datafiles`.`DID` =" . $_POST['DeleteDatabyID'] . ";");
+		$stmt->execute();
+		$dtfiles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($dtfiles);
+	}
+	
+	if(isset($_POST['DeleteTransfomerbyID'])) {
+		$db = new DbConnect;
+		$conn = $db->connect();
+		$stmt = $conn->prepare("DELETE FROM `transformers` WHERE `transformers`.`trID` = " . $_POST['DeleteTransfomerbyID'] . ";");
+		$stmt->execute();
+		$dtfiles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($dtfiles);
+	}
+
 ?>
