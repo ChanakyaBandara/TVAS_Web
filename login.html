@@ -42,6 +42,10 @@
                 <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="button" id="loginBtn"
                   name="log-in">Login</button>
               </div>
+              <div class="mt-3">
+                <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="button" id="guestBtn"
+                 >continue as a guest</button>
+              </div>
               <div class="mb-2">
                 <!--<button type="button" class="btn btn-block btn-facebook auth-form-btn">
                       <i class="mdi mdi-facebook mr-2"></i>Connect using facebook </button>-->
@@ -68,6 +72,7 @@
 
 <script lang="javascript">
   var loginBtn = document.getElementById('loginBtn');
+  var guestBtn = document.getElementById('guestBtn');
   var txtEmail = document.getElementById('txtEmail');
   var txtPass = document.getElementById('txtPass');
 
@@ -77,6 +82,9 @@
     }else{
       alert("please enter valid login credentials");
     }
+   });
+   guestBtn.addEventListener('click', function () {
+    window.location.replace("index_guest.html");
    });
 </script>
 <!-- endinject -->
