@@ -51,6 +51,26 @@ require 'Upload_file.php';
 		$trs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($trs);
 	}
+
+	if(isset($_POST['loadAnalizeTRID'])) {
+		$db = new DbConnect;
+		$conn = $db->connect();
+		$stmt = $conn->prepare("SELECT * FROM `datafiles` WHERE `trID`=" . $_POST['loadAnalizeTRID'] . " AND `load_condition`=" . $_POST['loadAnalizeLC'] . ";");
+		$stmt->execute();
+		$command = "powershell python c:/xampp/htdocs/TVAS_Web/python/calculate3.py";
+		if($result = $stmt->fetchAll(PDO::FETCH_ASSOC))
+			{
+				foreach ($result as $rows) {
+						$date =$rows['date'];
+						$filename =$rows['filename'];
+						$command = $command . " '".$date."'" . " '".$filename."'";
+					}
+			}  
+		
+		$output = shell_exec($command);
+		echo $output;
+		
+	}
 	//Windows
 	if(isset($_POST['getAnalizeData1']) && isset($_POST['getAnalizeData2'])) {
 		$output = shell_exec("powershell python c:/xampp/htdocs/TVAS_Web/python/calculate.py '". $_POST['getAnalizeData1'] ."' '". $_POST['getAnalizeData2'] ."'");

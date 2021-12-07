@@ -6,6 +6,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Analytics</title>
+  <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+  <link rel="stylesheet" href="css/charts.css" />
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
@@ -159,15 +164,17 @@
                   <div class="form-group row">
                     <label for="LCDrop" class="col-sm-3 col-form-label">Load Condition</label>
                     <div class="col-sm-9">
-                      <select class="form-control" id="LCDrop" name="LCDrop">
-                        <option selected value="3">100%</option>
+                      <select class="form-control" id="LCDrop" name="LCDrop" onchange="getComboA(this)">
+                        <option selected disabled value="-1">Please select load condition</option>
+                        <option value="3">100%</option>
                         <option value="2">50%</option>
                         <option value="1">0%</option>
                       </select>
                     </div>
                   </div>
-                  <button type="button" id="analizeBtn" class="btn btn-gradient-primary mr-2">Analize</button>
-                  <button type="reset" class="btn btn-warning">Clear</button>
+                  <div class="chartAreaWrapper">
+                    <canvas id="myChart"></canvas>
+                  </div>
                 </form>
               </div>
             </div>
@@ -204,61 +211,201 @@
   <!-- Custom js for this page -->
   <!-- End custom js for this page -->
   <script>
-    $(document).ready(function () {
-      var trSearchID = document.getElementById('trSearchID');
-      var trSearchBtn = document.getElementById('trSearchBtn');
-      var trAnalizeBtn = document.getElementById('analizeBtn');
-      var trID = document.getElementById('trID');
-      var trLocation = document.getElementById('trLocation');
-      var trPhase = document.getElementById('trPhase');
-      var trCapacity = document.getElementById('trCapacity');
+    var trSearchID = document.getElementById('trSearchID');
+    var trSearchBtn = document.getElementById('trSearchBtn');
+    var trAnalizeBtn = document.getElementById('analizeBtn');
+    var trID = document.getElementById('trID');
+    var trLocation = document.getElementById('trLocation');
+    var trPhase = document.getElementById('trPhase');
+    var trCapacity = document.getElementById('trCapacity');
+    var LCDrop = document.getElementById('LCDrop');
+    let TRIDD = -1;
+    var fileDataResult = [];
 
-      var classNameResult = [];
-
-      trSearchBtn.addEventListener('click', function () {
-        $.ajax({
-          url: 'php/data.php',
-          method: 'post',
-          data: 'loadTrTblSearch=' + trSearchID.value
-        }).done(function (trData) {
-          //console.log(modules);
-          trData = JSON.parse(trData);
-          //console.log(log);
-          //`trID`, `trName`, `location`, `capascity`, `phase`, `manufacture`, `year`
-          let TRIDD = -1;
-          trData.forEach(function (trData) {
-            trLocation.value = trData.location;
-            trPhase.value = trData.phase + " ph";
-            trCapacity.value = trData.capascity + " MVA";
-            trID.value = trData.trID
-            TRIDD = trData.trID;
-          });
-        });
-
-      });
-
-      trAnalizeBtn.addEventListener('click', function () {
-        Spinner();
-        Spinner.show();
-        $.ajax({
-          url: 'php/data.php',
-          method: 'post',
-          data: 'getAnalizeData1=' + sheet1.value + '&getAnalizeData2=' + sheet2.value
-        }).done(function (alanizeData) {
-          console.log(alanizeData);
-          alanizeData = JSON.parse(alanizeData);
-          //alanizeData = [{ "frequency": 50, "data": [{ "label": "LV-R", "val1": 0.0007257, "val2": 0.0007812, "percentage": 8 }, { "label": "LV-Y", "val1": 0.0007162, "val2": 0.000747138, "percentage": 4 }, { "label": "LV-B", "val1": 0.004279, "val2": 0.004701, "percentage": 10 }, { "label": "HV-R", "val1": 0.0001202, "val2": 0.0001338, "percentage": 11 }, { "label": "HV-Y", "val1": 0.000963, "val2": 0.001006, "percentage": 4 }, { "label": "HV-B", "val1": 0.004149, "val2": 0.004538, "percentage": 9 }] }, { "frequency": 100, "data": [{ "label": "LV-R", "val1": 0.144, "val2": 0.1413, "percentage": 2 }, { "label": "LV-Y", "val1": 0.0791, "val2": 0.06892, "percentage": 13 }, { "label": "LV-B", "val1": 0.2135, "val2": 0.18961, "percentage": 11 }, { "label": "HV-R", "val1": 0.00292082, "val2": 0.006733, "percentage": 131 }, { "label": "HV-Y", "val1": 0.04312, "val2": 0.03834, "percentage": 11 }, { "label": "HV-B", "val1": 0.02844, "val2": 0.06609, "percentage": 132 }] }, { "frequency": 150, "data": [{ "label": "LV-R", "val1": 0.002661, "val2": 0.003001, "percentage": 13 }, { "label": "LV-Y", "val1": 0.002579, "val2": 0.0031355, "percentage": 22 }, { "label": "LV-B", "val1": 0.002841, "val2": 0.00333, "percentage": 17 }, { "label": "HV-R", "val1": 4.907e-05, "val2": 5.812e-05, "percentage": 18 }, { "label": "HV-Y", "val1": 0.0004075, "val2": 0.000449, "percentage": 10 }, { "label": "HV-B", "val1": 0.0008668, "val2": 0.0009343, "percentage": 8 }] }, { "frequency": 200, "data": [{ "label": "LV-R", "val1": 0.36875, "val2": 0.03229, "percentage": 91 }, { "label": "LV-Y", "val1": 0.029554, "val2": 0.026, "percentage": 12 }, { "label": "LV-B", "val1": 0.028462, "val2": 0.02495, "percentage": 12 }, { "label": "HV-R", "val1": 0.25721, "val2": 0.01879, "percentage": 93 }, { "label": "HV-Y", "val1": 0.035534, "val2": 0.03244, "percentage": 9 }, { "label": "HV-B", "val1": 0.04114, "val2": 0.03368, "percentage": 18 }] }, { "frequency": 250, "data": [{ "label": "LV-R", "val1": 0.002597, "val2": 0.002772, "percentage": 7 }, { "label": "LV-Y", "val1": 0.0007496, "val2": 0.00085124, "percentage": 14 }, { "label": "LV-B", "val1": 0.005062, "val2": 0.005562, "percentage": 10 }, { "label": "HV-R", "val1": 0.009038, "val2": 0.010249, "percentage": 13 }, { "label": "HV-Y", "val1": 0.001245, "val2": 0.0013983, "percentage": 12 }, { "label": "HV-B", "val1": 0.001576, "val2": 0.0017741, "percentage": 13 }] }, { "frequency": 300, "data": [{ "label": "LV-R", "val1": 0.04636, "val2": 0.05187, "percentage": 12 }, { "label": "LV-Y", "val1": 0.1699, "val2": 0.19234, "percentage": 13 }, { "label": "LV-B", "val1": 0.1005, "val2": 0.01227, "percentage": 88 }, { "label": "HV-R", "val1": 0.0004995, "val2": 0.01442, "percentage": 2787 }, { "label": "HV-Y", "val1": 0.1051, "val2": 0.11987, "percentage": 14 }, { "label": "HV-B", "val1": 0.004721, "val2": 0.004502, "percentage": 5 }] }, { "frequency": 350, "data": [{ "label": "LV-R", "val1": 0.001276, "val2": 0.0013862, "percentage": 9 }, { "label": "LV-Y", "val1": 0.003345, "val2": 0.0037882, "percentage": 13 }, { "label": "LV-B", "val1": 0.002153, "val2": 0.0024697, "percentage": 15 }, { "label": "HV-R", "val1": 0.0001247, "val2": 0.00014244, "percentage": 14 }, { "label": "HV-Y", "val1": 0.001781, "val2": 0.0022406, "percentage": 26 }, { "label": "HV-B", "val1": 0.002913, "val2": 0.003855, "percentage": 32 }] }, { "frequency": 400, "data": [{ "label": "LV-R", "val1": 0.01179, "val2": 0.013368, "percentage": 13 }, { "label": "LV-Y", "val1": 0.02541, "val2": 0.029097, "percentage": 15 }, { "label": "LV-B", "val1": 0.01847, "val2": 0.02081, "percentage": 13 }, { "label": "HV-R", "val1": 0.0002867, "val2": 0.0004696, "percentage": 64 }, { "label": "HV-Y", "val1": 0.03342, "val2": 0.036798, "percentage": 10 }, { "label": "HV-B", "val1": 0.03977, "val2": 0.046089, "percentage": 16 }] }, { "frequency": 450, "data": [{ "label": "LV-R", "val1": 0.001028, "val2": 0.001204, "percentage": 17 }, { "label": "LV-Y", "val1": 0.00171, "val2": 0.001972, "percentage": 15 }, { "label": "LV-B", "val1": 0.001252, "val2": 0.0013952, "percentage": 11 }, { "label": "HV-R", "val1": 0.000506, "val2": 0.0005746, "percentage": 14 }, { "label": "HV-Y", "val1": 0.0009406, "val2": 0.0010598, "percentage": 13 }, { "label": "HV-B", "val1": 0.00123, "val2": 0.0013986, "percentage": 14 }] }, { "frequency": 500, "data": [{ "label": "LV-R", "val1": 0.07984, "val2": 0.08592, "percentage": 8 }, { "label": "LV-Y", "val1": 0.05316, "val2": 0.05953, "percentage": 12 }, { "label": "LV-B", "val1": 0.165, "val2": 0.18244, "percentage": 11 }, { "label": "HV-R", "val1": 0.02458, "val2": 0.031801, "percentage": 29 }, { "label": "HV-Y", "val1": 0.05194, "val2": 0.05871, "percentage": 13 }, { "label": "HV-B", "val1": 0.1092, "val2": 0.12533, "percentage": 15 }] }, { "frequency": 800, "data": [{ "label": "LV-R", "val1": 0.01209, "val2": 0.013324, "percentage": 10 }, { "label": "LV-Y", "val1": 0.006237, "val2": 0.007165, "percentage": 15 }, { "label": "LV-B", "val1": 0.03358, "val2": 0.036142, "percentage": 8 }, { "label": "HV-R", "val1": 9.054e-05, "val2": 0.0001229, "percentage": 36 }, { "label": "HV-Y", "val1": 0.001391, "val2": 0.00154707, "percentage": 11 }, { "label": "HV-B", "val1": 0.02731, "val2": 0.032649, "percentage": 20 }] }, { "frequency": 900, "data": [{ "label": "LV-R", "val1": 0.01143, "val2": 0.01458, "percentage": 28 }, { "label": "LV-Y", "val1": 0.01105, "val2": 0.012388, "percentage": 12 }, { "label": "LV-B", "val1": 0.01687, "val2": 0.0219, "percentage": 30 }, { "label": "HV-R", "val1": 0.0001433, "val2": 0.00015753, "percentage": 10 }, { "label": "HV-Y", "val1": 0.005653, "val2": 0.0063183, "percentage": 12 }, { "label": "HV-B", "val1": 0.005207, "val2": 0.0061822, "percentage": 19 }] }, { "frequency": 1000, "data": [{ "label": "LV-R", "val1": 0.02796, "val2": 0.028885, "percentage": 3 }, { "label": "LV-Y", "val1": 0.01496, "val2": 0.016128, "percentage": 8 }, { "label": "LV-B", "val1": 0.01384, "val2": 0.0144669, "percentage": 5 }, { "label": "HV-R", "val1": 0.001612, "val2": 0.0018125, "percentage": 12 }, { "label": "HV-Y", "val1": 0.01555, "val2": 0.01782963, "percentage": 15 }, { "label": "HV-B", "val1": 0.00537, "val2": 0.005901, "percentage": 10 }] }];
-          console.log(alanizeData);
-          $('#trTblBody').empty();
-          // alanizeData.forEach(function (alanizeData) {
-          //   $('#trTblBody').append('<tr></td><td>' + alanizeData.voltage + '</td><td>' + alanizeData.phase + '</td><td>' + alanizeData.LF + ' %</td><td>' + alanizeData.HF + ' %</td><td>' + alanizeData.FF + ' %</td><td></td></tr>');
-          // });
-          loadDataTable(alanizeData);
-          Spinner.hide();
+    trSearchBtn.addEventListener('click', function () {
+      $.ajax({
+        url: 'php/data.php',
+        method: 'post',
+        data: 'loadTrTblSearch=' + trSearchID.value
+      }).done(function (trData) {
+        //console.log(modules);
+        trData = JSON.parse(trData);
+        //console.log(log);
+        //`trID`, `trName`, `location`, `capascity`, `phase`, `manufacture`, `year`
+        trData.forEach(function (trData) {
+          trLocation.value = trData.location;
+          trPhase.value = trData.phase + " ph";
+          trCapacity.value = trData.capascity + " MVA";
+          trID.value = trData.trID
+          TRIDD = trData.trID;
         });
       });
 
     });
+
+    function getComboA(selectObject) {
+      Spinner();
+      Spinner.show();
+      var value = selectObject.value;
+      var myChart = document.getElementById("myChart").getContext("2d");
+      // Global Options
+      Chart.defaults.global.defaultFontFamily = "Lato";
+      Chart.defaults.global.defaultFontSize = 18;
+      Chart.defaults.global.defaultFontColor = "#777";
+      //console.log(value);
+      $.ajax({
+        url: "php/data.php",
+        method: "post",
+        data: "loadAnalizeTRID=" + TRIDD + "&loadAnalizeLC=" + value,
+      }).done(function (fileData) {
+        fileDataResult = JSON.parse(fileData);
+        //console.log(fileDataResult);
+        dataHeadings = ["LV-R","LV-Y","LV-B","HV-R","HV-Y","HV-B"]
+        subsections1 =[]
+        subsections2 =[]
+        subsections3 =[]
+        subsections4 =[]
+        subsections5 =[]
+        subsections6 =[]
+        subsections7 =[]
+
+        fileDataResult.forEach((item)=>{
+          subsections1.push(item.date)
+          item.data.forEach((val,index)=>{
+            
+            switch (index){
+              case 0:
+                subsections2.push(val)
+                break
+              case 1:
+                subsections3.push(val)
+                break
+              case 2:
+                subsections4.push(val)
+                break
+              case 3:
+                subsections5.push(val)
+                break
+              case 4:
+                subsections6.push(val)
+                break
+              case 5:
+                subsections7.push(val)
+                break
+            }
+          })
+        });
+        
+        var massPopChart = new Chart(myChart, {
+          type: "line", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+          data: {
+            labels: subsections1,
+            datasets: [
+              {
+                label: dataHeadings[0],
+                data: subsections2,
+                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                borderWidth: 3,
+                fill: false,
+                borderColor: "rgba(255, 99, 132, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[1],
+                data: subsections3,
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                borderWidth: 3,
+                fill: false,
+                borderColor: "rgba(75, 192, 192, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[2],
+                data: subsections4,
+                backgroundColor: "rgba(255, 205, 86)",
+                borderWidth: 3,
+                fill: false,
+                borderColor: "rgba(255, 205, 86)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[3],
+                data: subsections5,
+                backgroundColor: "rgba(201, 203, 207)",
+                borderWidth: 3,
+                fill: false,
+                borderColor: "rgba(201, 203, 207)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[4],
+                data: subsections6,
+                backgroundColor: "rgba(54, 162, 235)",
+                borderWidth: 3,
+                fill: false,
+                borderColor: "rgba(54, 162, 235)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+              {
+                label: dataHeadings[5],
+                data: subsections7,
+                backgroundColor: "rgba(236, 3, 252, 0.6)",
+                borderWidth: 3,
+                fill: false,
+                borderColor: "rgba(236, 3, 252, 0.6)",
+                hoverBorderWidth: 3,
+                hoverBorderColor: "#000",
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              autocolors: false,
+              annotation: {
+                annotations: {
+                  line1: {
+                    type: "line",
+                    yMin: 0.5,
+                    yMax: 0.5,
+                    borderColor: "rgb(255, 99, 132)",
+                    borderWidth: 2,
+                  },
+                },
+              },
+            },
+            title: {
+              display: true,
+              text: "TR Vibrations",
+              fontSize: 25,
+            },
+            legend: {
+              display: true,
+              position: "right",
+              labels: {
+                fontColor: "#000",
+              },
+            },
+            layout: {
+              padding: {
+                left: 50,
+                right: 0,
+                bottom: 0,
+                top: 0,
+              },
+            },
+            tooltips: {
+              enabled: true,
+            },
+          },
+        });
+        Spinner.hide();
+      });
+    }
   </script>
 </body>
 
