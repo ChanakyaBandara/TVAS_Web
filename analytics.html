@@ -19,6 +19,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/style2.css" />
+    <link rel="stylesheet" href="css/table.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="images/favicon.png" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -167,8 +168,7 @@
                         >Transformer ID</label
                       >
                       <div class="input-group col-sm-9">
-                        <input
-                          type="text"
+                        <inputtype="text"
                           class="form-control"
                           placeholder="Transformer ID"
                           aria-label="Recipient's username"
@@ -266,7 +266,7 @@
                     Download
                   </button>
                   <div id="content">
-                    <table class="table">
+                    <table class="table" hidden>
                       <thead>
                         <tr>
                           <th>LV / HV</th>
@@ -279,6 +279,132 @@
                       </thead>
                       <tbody id="trTblBody"></tbody>
                     </table>
+                    <!-- <table class="wordtable" hidden>
+                      <thead>
+                        <tr>
+                          <th>Vibration Classification
+                            </th>
+                          <th>Actions </th>
+                          <th>Descriptions </th>
+                          <th>Interval </th>
+                        </tr>
+                        <tbody >
+                          <tr class="green">
+                            <td>
+                              Vibration Class A
+                            Health condition is NORMAL
+                            </td>
+                            <td>Inspections 
+                              Visible, audible, can be smelt or felt, which are subjective to human interpretations                              
+                               </td>
+                            <td>
+                              OTI, WTI, Oil level, oil leaking, Sound level, Silica Gen Breatder, Fan operations, 
+                            </td>
+                            <td>Quarterly </td>
+                          </tr>
+                          <tr class="green">
+                            <td> </td>
+                            <td>Basic Condition Monitoring Techniques
+                              Basic measurements are used to gain information on the actual condition of a part of a transformer
+                              </td>
+                            <td>
+                              Insulation Resistance
+                              Oil tests ; BDV/IFT/Moisture/Conductivity
+                              Tan/DGA 
+                              Thermal IR Imaging
+                              </td>
+                            <td>Annually  </td>
+                          </tr >
+                          <tr class="green">
+                            <td> </td>
+                            <td>Advance Condition Monitoring Techniques
+                              Advanced measurements are used to gain information on the actual condition of a part of a transformer.
+                               </td>
+                            <td>
+                              Ratio, Winding Resistance, Tan/Cap, Bushing Tan /Cap , Excitation Current, DFRA, SFRA, FRSL & SC Impedance, Furans
+                              </td>
+                            <td>Bi- Annually  </td>
+                          </tr>
+                        
+                          <tr class="yellow">
+                            <td>
+                              Vibration Class B
+Health condition is ALERT
+
+                            </td>
+                            <td>Inspections 
+                              Visible, audible, can be smelt or felt, which are subjective to human interpretations
+                              </td>
+                            <td>
+                              OTI, WTI, Oil level, oil leaking, Sound level, Silica Gen Breatder, Fan operations, 
+                            </td>
+                            <td>Monthly </td>
+                          </tr>
+                          <tr class="yellow">
+                            <td> </td>
+                            <td>Basic Condition Monitoring Techniques
+                              Basic measurements are used to gain information on the actual condition of a part of a transformer
+                              </td>
+                            <td>
+                              Insulation Resistance
+Oil tests ; BDV/IFT/Moisture/Conductivity
+Tan/DGA 
+Thermal IR Imaging
+
+                              </td>
+                            <td>Quarterly  </td>
+                          </tr>
+                          <tr class="yellow">
+                            <td> </td>
+                            <td>Advance Condition Monitoring Techniques
+                              Advanced measurements are used to gain information on the actual condition of a part of a transformer.</td>
+                            <td>
+                              Ratio, Winding Resistance, Tan-Capacitance, Bushing Tan/Cap, Excitation Current,DFRA, SFRA, FRSL & SC Impedance, Furans  </td>
+                            <td> Annually    </td>
+                          </tr>
+                          <tr class="red">
+                            <td>
+                              Vibration Class C
+Health condition is ALRAMING
+
+                            </td>
+                            <td>Inspections 
+                              Visible, audible, can be smelt or felt, which are subjective to human interpretations
+                               </td>
+                            <td>
+                              OTI, WTI, Oil level, oil leaking, Sound level, Silica Gen Breather, Fan operations, </td>
+                            <td>Quarterly </td>
+                          </tr>
+                          <tr class="red">
+                            <td> </td>
+                            <td>Basic Condition Monitoring Techniques
+                              Basic measurements are used to gain information on the actual condition of a part of a transformer
+                               </td>
+                            <td>
+                              Insulation Resistance
+Oil tests ; BDV/IFT/Moisture/Conductivity
+Tan/DGA 
+Thermal IR Imaging
+
+                              </td>
+                            <td>Monthly
+                              Consider removing from service  & get recommended actions from OEM.
+                               </td>
+                          </tr>
+                          <tr class="red">
+                            <td> </td>
+                            <td>Advance Condition Monitoring Techniques
+                              Advanced measurements are used to gain information on the actual condition of a part of a transformer.
+                               </td>
+                            <td>
+                              Ratio, Winding Resistance, Tan-Capacitance, Bushing Tan/Cap, Excitation Current, DFRA, SFRA, FRSL & SC Impedance, Furans </td>
+                            <td>Quarterly 
+                              Consider remove from service  & get recommended actions from OEM.
+                                </td>
+                          </tr>
+                        </tbody>
+                      </thead>
+                    </table> -->
                   </div>
                 </div>
               </div>
@@ -680,11 +806,12 @@
       }
 
       function downloadPDF() {
-        document.getElementById("content").style.display = "block";
+        document.getElementById('content').style.display = 'block';
         const resultLable = this.document.getElementById("resultDiv");
         const invoice = this.document.getElementById("content");
         const internalTable = invoice.getInnerHTML();
         const resultLableHTML = resultLable.getInnerHTML();
+        const CommonTable ="<table class='wordtable'><thead><tr><th>Vibration Classification  </th><th>Actions </th><th>Descriptions </th><th>Interval </th></tr><tbody ><tr class='green'>  <td>    Vibration Class A  Health condition is NORMAL  </td>  <td>Inspections     Visible, audible, can be smelt or felt, which are subjective to human interpretations                    </td>  <td>    OTI, WTI, Oil level, oil leaking, Sound level, Silica Gen Breatder, Fan operations,   </td>  <td>Quarterly </td></tr><tr class='green'>  <td> </td>  <td>Basic Condition Monitoring Techniques    Basic measurements are used to gain information on the actual condition of a part of a transformer    </td>  <td>    Insulation Resistance    Oil tests ; BDV/IFT/Moisture/Conductivity    Tan/DGA     Thermal IR Imaging    </td>  <td>Annually  </td></tr ><tr class='green'>  <td> </td>  <td>Advance Condition Monitoring Techniques    Advanced measurements are used to gain information on the actual condition of a part of a transformer.     </td>  <td>    Ratio, Winding Resistance, Tan/Cap, Bushing Tan /Cap , Excitation Current, DFRA, SFRA, FRSL & SC Impedance, Furans    </td>  <td>Bi- Annually  </td></tr><tr class='yellow'>  <td>    Vibration Class B Health condition is ALERT</td>  <td>Inspections     Visible, audible, can be smelt or felt, which are subjective to human interpretations    </td>  <td>    OTI, WTI, Oil level, oil leaking, Sound level, Silica Gen Breatder, Fan operations,   </td>  <td>Monthly </td></tr><tr class='yellow'>  <td> </td>  <td>Basic Condition Monitoring Techniques    Basic measurements are used to gain information on the actual condition of a part of a transformer    </td>  <td>    Insulation ResistanceOil tests ; BDV/IFT/Moisture/ConductivityTan/DGA Thermal IR Imaging</td>  <td>Quarterly  </td></tr><tr class='yellow'>  <td> </td>  <td>Advance Condition Monitoring TechniqueAdvanced measurements are used to gain information on the actual condition of a part of a transformer.</td>  <tdRatio, Winding Resistance, Tan-Capacitance, Bushing Tan/Cap, Excitation Current,DFRA, SFRA, FRSL & SC Impedance, Furans  </td>  <td> Annuall</td></tr><tr class='red'>  <tdVibration Class CHealth condition is ALRAMING</td>  <td>Inspection Visible, audible, can be smelt or felt, which are subjective to human interpretation </td>  <tdOTI, WTI,   level, oil leaking, Sound level, Silica Gen Breather, Fan operations, </td>  <td>Quarterly </td></tr><tr class='red'>  <td> </td>  <td>Basic Condition Monitoring TechniqueBasic measurements are used to gain information on the actual condition of a part of a transforme </td>  <tdInsulation ResistanceOil tests ; BDV/IFT/Moisture/Conductivity Tan/DGA  Thermal IR Imaging</td >  <td>Monthly    Consider removing from service  & get recommended actions from OEM.     </td></tr><tr class='red'>  <td> </td>  <td>Advance Condition Monitoring Techniques    Advanced measurements are used to gain information on the actual condition of a part of a transformer.     </td>  <td>    Ratio, Winding Resistance, Tan-Capacitance, Bushing Tan/Cap, Excitation Current, DFRA, SFRA, FRSL & SC Impedance, Furans </td>  <td>Quarterly     Consider remove from service  & get recommended actions from OEM.      </td></tr></tbody></thead></table>"
         const d = new Date();
         const template =
           "<div style='margin-bottom: 25px'; class><img src='images/logo-1.png' alt='logo' width='200px'/></div><h3 class='page-title'>Analytics Report</h3>" +
@@ -692,7 +819,8 @@
           "<br>" +
           internalTable +
           "<p>" +
-          d +
+
+          d +CommonTable+
           "</p>";
         console.log(invoice);
         console.log(window);
@@ -700,7 +828,7 @@
           margin: 1,
           filename: "Analytics report.pdf",
           image: { type: "jpeg", quality: 2 },
-          html2canvas: { scale: 2 },
+          html2canvas: { scale: 5 },
           jsPDF: { unit: "cm", format: "letter", orientation: "landscape" },
         };
         html2pdf().from(template).set(opt).save();

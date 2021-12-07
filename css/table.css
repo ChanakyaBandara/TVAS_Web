@@ -1,0 +1,15 @@
+
+.wordtable tr{
+border: 10px;
+
+border-color: black;
+}
+.green{
+background-color: green;
+}
+.yellow{
+    background-color: yellow;
+}
+.red{
+    background-color: red;
+}
