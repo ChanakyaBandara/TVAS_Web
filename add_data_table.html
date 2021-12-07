@@ -131,7 +131,7 @@
                     </div>
                   </div>
                 </div>
-                <form class="forms-sample" method="post" action="php/data.php" enctype="multipart/form-data">
+                <form class="forms-sample" method="post" action="php/data.php" enctype="multipart/form-data" id="dataForm">
                   <input type="hidden" id="trID" name="trID">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Transformer ID</label>
@@ -168,7 +168,7 @@
                   <div class="form-group row">
                     <label for="fanCondition" class="col-sm-3 col-form-label">Fan Condition</label>
                     <div class="col-sm-9">
-                      <select class="form-control" id="fanCondition" name="fanCondition">
+                      <select class="form-control" id="fanCondition" name="fanCondition" form="dataForm">
                         <option selected value="0">OFF</option>
                         <option value="1">ON</option>
                       </select>

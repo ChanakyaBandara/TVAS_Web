@@ -37,7 +37,7 @@ require 'Upload_file.php';
     if(isset($_POST['loadTrTblSearch'])) {
 		$db = new DbConnect;
 		$conn = $db->connect();
-		$stmt = $conn->prepare("SELECT * FROM `transformers` where `trName`=\"" . $_POST['loadTrTblSearch'] . "\" ;");
+		$stmt = $conn->prepare("SELECT * FROM `transformers` where `trName` LIKE \"%" . $_POST['loadTrTblSearch'] . "%\" ;");
 		$stmt->execute();
 		$trs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($trs);
@@ -106,7 +106,7 @@ require 'Upload_file.php';
 					exit();
     	}
 	}
-
+	
 	if(isset($_POST['loadFileTbl'])) {
 		$db = new DbConnect;
 		$conn = $db->connect();
