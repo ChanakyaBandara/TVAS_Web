@@ -252,9 +252,9 @@
                   <div id="resultDiv">
                     <div class="float-right mb-5">
                       <h1 id="finalResult" class="menu-title text-success mr-2">
-                        Hello
+                        
                       </h1>
-                      <p id="finalResultDesc">world</p>
+                      <p id="finalResultDesc"></p>
                     </div>
                   </div>
                   <br />
@@ -373,7 +373,7 @@
                 //console.log(fileData.load_condition)
                 var loadCondition = "";
                 switch (fileData.load_condition) {
-                  case "1":
+                  case "3":
                     loadCondition = "100%";
                     break;
                   case "2":
@@ -655,20 +655,20 @@
       }
       //getTdColour
       function getTdColour(val) {
-        if (val > 20) {
+        if (val > 25) {
           return "red";
-        } else if (val > 15) {
+        } else if (val > 20) {
           return "blue";
         } else {
           return "green";
         }
       }
       function getClassName() {
-        if (classNameResult.some((item) => item > 20)) {
+        if (classNameResult.some((item) => item > 25)) {
           document.getElementById("finalResult").innerHTML = "Class C";
           document.getElementById("finalResultDesc").innerHTML =
             "Health condition is ALRAMING.";
-        } else if (classNameResult.some((item) => item > 15)) {
+        } else if (classNameResult.some((item) => item > 20)) {
           document.getElementById("finalResult").innerHTML = "Class B";
           document.getElementById("finalResultDesc").innerHTML =
             "Health condition is ALERT.";
