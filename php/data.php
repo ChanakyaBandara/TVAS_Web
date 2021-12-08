@@ -53,11 +53,13 @@ require 'Upload_file.php';
 	}
 
 	if(isset($_POST['loadAnalizeTRID'])) {
+		//loadAnalizeCom
+		$ComVal = $_POST['loadAnalizeCom'];
 		$db = new DbConnect;
 		$conn = $db->connect();
 		$stmt = $conn->prepare("SELECT * FROM `datafiles` WHERE `trID`=" . $_POST['loadAnalizeTRID'] . " AND `load_condition`=" . $_POST['loadAnalizeLC'] . ";");
 		$stmt->execute();
-		$command = "powershell python c:/xampp/htdocs/TVAS_Web/python/calculate3.py";
+		$command = "powershell python c:/xampp/htdocs/TVAS_Web/python/calculate3.py ".$ComVal;
 		if($result = $stmt->fetchAll(PDO::FETCH_ASSOC))
 			{
 				foreach ($result as $rows) {

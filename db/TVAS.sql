@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2021 at 05:15 AM
+-- Generation Time: Dec 07, 2021 at 04:12 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -64,7 +64,9 @@ INSERT INTO `datafiles` (`DID`, `trID`, `load_condition`, `date`, `fan`, `tap`, 
 (19, 7, 2, '2021-12-04T09:05', 0, 0, '61aae20abc3039.18642944.xlsx'),
 (20, 7, 3, '2021-12-02T09:59', 0, 0, '61aaef4a5e0214.17562180.xlsx'),
 (21, 7, 3, '2021-12-04T10:02', 0, 0, '61aaef6c6f1b40.21708028.xlsx'),
-(22, 2, 1, '2021-12-05T13:08', 1, 5, '61ab1af3001491.71177133.xlsx');
+(22, 2, 1, '2021-12-05T13:08', 1, 5, '61ab1af3001491.71177133.xlsx'),
+(23, 2, 3, '2021-12-07T11:08', 1, 3, '61aef3754f2393.19633738.xlsx'),
+(24, 6, 2, '2021-12-06T20:33', 1, 5, '61af77c518c9a6.06501675.xlsx');
 
 -- --------------------------------------------------------
 
@@ -120,7 +122,7 @@ ALTER TABLE `transformers`
 -- AUTO_INCREMENT for table `datafiles`
 --
 ALTER TABLE `datafiles`
-  MODIFY `DID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `DID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `transformers`

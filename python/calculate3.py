@@ -26,15 +26,16 @@ class excelFile:
 fileList = []
 dateList = []
 finalArray = []
-for x in range(len(sys.argv)-1):
+comVal = sys.argv[1]
+for x in range(1,len(sys.argv)-1):
     y = x+1
-    if (y%2==0):
+    if (y%2!=0):
         fileList.append(sys.argv[y])
     else:
         dateList.append(sys.argv[y])
 
 for k in range(len(fileList)):
-    file1 = excelFile(fileList[k],100)
+    file1 = excelFile(fileList[k],int(comVal))
     arr1 = file1.getfilterdValues()
     for x in range(len(arr1)):
         tempRows = []

@@ -165,11 +165,33 @@
                   <div class="form-group row">
                     <label for="LCDrop" class="col-sm-3 col-form-label">Load Condition</label>
                     <div class="col-sm-9">
-                      <select class="form-control" id="LCDrop" name="LCDrop" onchange="getComboA(this)">
+                      <select class="form-control" id="LCDrop" name="LCDrop">
                         <option selected disabled value="-1">Please select load condition</option>
                         <option value="3">100%</option>
                         <option value="2">50%</option>
                         <option value="1">0%</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="ComDrop" class="col-sm-3 col-form-label">Compornent</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" id="ComDrop" name="ComDrop" onchange="getComboA(this)">
+                        <option selected disabled value="-1">Please select Compornent</option>
+                        <option value="50">50 Hz</option>
+                        <option value="100">100 Hz</option>
+                        <option value="150">150 Hz</option>
+                        <option value="200">200 Hz</option>
+                        <option value="250">250 Hz</option>
+                        <option value="300">300 Hz</option>
+                        <option value="350">350 Hz</option>
+                        <option value="400">400 Hz</option>
+                        <option value="450">450 Hz</option>
+                        <option value="500">500 Hz</option>
+                        <option value="700">700 Hz</option>
+                        <option value="800">800 Hz</option>
+                        <option value="900">900 Hz</option>
+                        <option value="1000">1000 Hz</option>
                       </select>
                     </div>
                   </div>
@@ -220,6 +242,7 @@
     var trPhase = document.getElementById('trPhase');
     var trCapacity = document.getElementById('trCapacity');
     var LCDrop = document.getElementById('LCDrop');
+    var ComDrop = document.getElementById('ComDrop');
     let TRIDD = -1;
     var fileDataResult = [];
 
@@ -229,7 +252,7 @@
         method: 'post',
         data: 'loadTrTblSearch=' + trSearchID.value
       }).done(function (trData) {
-        //console.log(modules);
+        //console.log(trData);
         trData = JSON.parse(trData);
         //console.log(log);
         //`trID`, `trName`, `location`, `capascity`, `phase`, `manufacture`, `year`
@@ -248,6 +271,7 @@
       Spinner();
       Spinner.show();
       var value = selectObject.value;
+      var LC = LCDrop.value;
       var myChart = document.getElementById("myChart").getContext("2d");
       // Global Options
       Chart.defaults.global.defaultFontFamily = "Lato";
@@ -257,8 +281,9 @@
       $.ajax({
         url: "php/data.php",
         method: "post",
-        data: "loadAnalizeTRID=" + TRIDD + "&loadAnalizeLC=" + value,
+        data: "loadAnalizeTRID=" + TRIDD + "&loadAnalizeLC=" + LC + "&loadAnalizeCom=" + value,
       }).done(function (fileData) {
+        //console.log(fileData);
         fileDataResult = JSON.parse(fileData);
         //console.log(fileDataResult);
         dataHeadings = ["LV-R","LV-Y","LV-B","HV-R","HV-Y","HV-B"]
